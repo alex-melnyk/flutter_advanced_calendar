@@ -30,7 +30,7 @@ class Header extends StatelessWidget {
           Text(
             _dateFormatter.format(monthDate),
             style: TextStyle(
-              color: theme.primaryColor,
+              color: theme.accentColor,
             ),
           ),
           InkWell(
@@ -46,7 +46,7 @@ class Header extends StatelessWidget {
               child: Text(
                 'Today',
                 style: TextStyle(
-                  color: theme.primaryColor,
+                  color: theme.accentColor,
                 ),
               ),
             ),
