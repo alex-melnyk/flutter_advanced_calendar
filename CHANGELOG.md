@@ -1,3 +1,7 @@
+## 0.0.1+2
+
+* Code formatted.
+
 ## 0.0.1+1
 
 * Readme updated.

@@ -4,17 +4,11 @@ import 'package:intl/intl.dart';
 import 'controller.dart';
 
 part 'date_box.dart';
-
 part 'datetime_util.dart';
-
 part 'handlebar.dart';
-
 part 'header.dart';
-
 part 'month_view.dart';
-
 part 'month_view_bean.dart';
-
 part 'week_days.dart';
 
 const monthViewWeekHeight = 32.0;
