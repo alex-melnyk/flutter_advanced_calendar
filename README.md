@@ -5,4 +5,5 @@ An advanced calendar provides a rich API for widget customization that opens a n
 ## Advanced Calendar Theme LAF
 | Advanced Calendar Light Theme | Advanced Calendar Dark Theme |
 |:-:|:-:|
-| ![PREVIEW_LIGHT](./PREVIEW_LIGHT.png) | ![PREVIEW_DARK](./PREVIEW_DARK.png) |
+| ![PREVIEW_LIGHT_COLLAPSED](./PREVIEW_LIGHT_COLLAPSED.png) | ![PREVIEW_DARK_COLLAPSED](./PREVIEW_DARK_COLLAPSED.png) |
+| ![PREVIEW_LIGHT_EXPANDED](./PREVIEW_LIGHT_EXPANDED.png) | ![PREVIEW_DARK_EXPANDED](./PREVIEW_DARK_EXPANDED.png) |
