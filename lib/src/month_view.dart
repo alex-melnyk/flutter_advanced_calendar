@@ -18,9 +18,7 @@ class MonthView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
-    final index = monthView.dates.indexWhere((day) => day == selectedDate) ~/ 7;
+    final index = selectedDate.findWeekIndex(monthView.dates);
     final offset = (index / 5) * 2;
 
     return OverflowBox(
@@ -32,44 +30,13 @@ class MonthView extends StatelessWidget {
         children: List<Widget>.generate(
           6,
           (weekIndex) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: 4.0,
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: List<Widget>.generate(
-                  7,
-                  (dayIndex) {
-                    final day = monthView.dates[dayIndex + (weekIndex * 7)];
+            final weekStart = weekIndex * 7;
 
-                    final isToday = day.isAtSameMomentAs(todayDate);
-                    final isSelected = day.isAtSameMomentAs(selectedDate);
-                    final isHighlight = day.month == monthView.firstDay.month;
-
-                    return DateBox(
-                      onPressed: () => onChanged(day),
-                      child: Text(
-                        '${day.day}',
-                        style: TextStyle(
-                          color: isSelected || isToday
-                              ? Colors.white
-                              : isHighlight
-                                  ? null
-                                  : theme.hintColor,
-                        ),
-                      ),
-                      color: isSelected
-                          ? theme.primaryColor
-                          : isToday
-                              ? Colors.orangeAccent
-                              : null,
-                    );
-                  },
-                  growable: false,
-                ),
-              ),
+            return WeekView(
+              dates: monthView.dates.sublist(weekStart, weekStart + 7),
+              selectedDate: selectedDate,
+              highlightMonth: monthView.firstDay.month,
+              onChanged: onChanged,
             );
           },
           growable: false,

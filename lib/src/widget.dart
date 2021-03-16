@@ -4,12 +4,20 @@ import 'package:intl/intl.dart';
 import 'controller.dart';
 
 part 'date_box.dart';
+
 part 'datetime_util.dart';
+
 part 'handlebar.dart';
+
 part 'header.dart';
+
 part 'month_view.dart';
+
 part 'month_view_bean.dart';
+
 part 'week_days.dart';
+
+part 'week_view.dart';
 
 const monthViewWeekHeight = 32.0;
 
@@ -31,6 +39,7 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
     with SingleTickerProviderStateMixin {
   final _pageController = PageController(initialPage: 6);
   final _currentPage = ValueNotifier<int>(6);
+  final _weekView = ValueNotifier<bool>(false);
   AnimationController _animationController;
   AdvancedCalendarController _controller;
 
@@ -63,22 +72,6 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
     });
   }
 
-  MonthViewBean _generateMonthViewDate(DateTime baseDate, int month) {
-    final firstMonthDate = DateTime(baseDate.year, month, 1);
-    final firstViewDate = firstMonthDate.subtract(Duration(
-      days: firstMonthDate.weekday,
-    ));
-
-    return MonthViewBean(
-      firstMonthDate,
-      List.generate(
-        42,
-        (index) => firstViewDate.add(Duration(days: index)).toZeroTime(),
-        growable: false,
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -94,85 +87,144 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
         child: GestureDetector(
           onVerticalDragStart: (details) {
             _captureOffset = details.globalPosition;
+
+            setState(() {
+              _weekView.value = false;
+            });
           },
           onVerticalDragUpdate: (details) {
             final moveOffset = details.globalPosition;
 
-            final diff = moveOffset - _captureOffset;
+            final diffY = moveOffset.dy - _captureOffset.dy;
 
-            _animationController.value = _animationValue + diff.dy / 200;
+            _animationController.value =
+                _animationValue + diffY / (monthViewWeekHeight * 5);
           },
           onVerticalDragEnd: (details) => _handleFinishDrag(),
           onVerticalDragCancel: () => _handleFinishDrag(),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ValueListenableBuilder(
-                valueListenable: _currentPage,
-                builder: (_, value, __) {
-                  return Header(
-                    monthDate: _monthViews[_currentPage.value].firstDay,
-                    onPressed: _handleTodayPressed,
-                  );
-                },
-              ),
-              WeekDays(
-                style: commonTextStyle.copyWith(
-                  color: theme.hintColor,
+          child: Container(
+            color: Colors.transparent,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ValueListenableBuilder(
+                  valueListenable: _currentPage,
+                  builder: (_, value, __) {
+                    return Header(
+                      monthDate: _monthViews[_currentPage.value].firstDay,
+                      onPressed: _handleTodayPressed,
+                    );
+                  },
                 ),
-              ),
-              AnimatedBuilder(
-                animation: _animationController,
-                builder: (context, child) {
-                  final height = Tween<double>(
-                    begin: monthViewWeekHeight,
-                    end: monthViewWeekHeight * 6.0,
-                  ).transform(_animationController.value);
+                WeekDays(
+                  style: commonTextStyle.copyWith(
+                    color: theme.hintColor,
+                  ),
+                ),
+                AnimatedBuilder(
+                  animation: _animationController,
+                  builder: (_, __) {
+                    final height = Tween<double>(
+                      begin: monthViewWeekHeight,
+                      end: monthViewWeekHeight * 6.0,
+                    ).transform(_animationController.value);
 
-                  return SizedBox(
-                    height: height,
-                    child: PageView.builder(
-                      controller: _pageController,
-                      physics: _animationController.value == 1.0
-                          ? AlwaysScrollableScrollPhysics()
-                          : NeverScrollableScrollPhysics(),
-                      pageSnapping: true,
-                      onPageChanged: (pageIndex) {
-                        _currentPage.value = pageIndex;
-                      },
-                      itemCount: _monthViews.length,
-                      itemBuilder: (_, pageIndex) {
-                        return ValueListenableBuilder<DateTime>(
-                          valueListenable: _controller,
-                          builder: (_, selectedDate, __) {
-                            return MonthView(
-                              monthView: _monthViews[pageIndex],
-                              todayDate: _todayDate,
-                              selectedDate: selectedDate,
-                              onChanged: (date) {
-                                _controller.value = date;
-                              },
-                            );
-                          },
-                        );
-                      },
-                    ),
-                  );
-                },
-              ),
-              HandleBar(
-                onPressed: () async {
-                  await _animationController.forward();
-                  _animationValue = 1.0;
-                },
-              ),
-            ],
+                    return SizedBox(
+                      height: height,
+                      child: ValueListenableBuilder<DateTime>(
+                        valueListenable: _controller,
+                        builder: (_, selectedDate, __) {
+                          return ValueListenableBuilder<bool>(
+                            valueListenable: _weekView,
+                            builder: (_, value, __) {
+                              if (value) {
+                                return ValueListenableBuilder<int>(
+                                  valueListenable: _currentPage,
+                                  builder: (_, pageIndex, __) {
+                                    final monthView = _monthViews[pageIndex];
+
+                                    final weekIndex = selectedDate
+                                        .findWeekIndex(monthView.dates);
+
+                                    final startIndex = weekIndex * 7;
+
+                                    final selectedWeek = monthView.dates
+                                        .sublist(startIndex, startIndex + 7);
+
+                                    return WeekView(
+                                      dates: selectedWeek,
+                                      selectedDate: selectedDate,
+                                      highlightMonth: monthView.firstDay.month,
+                                      onChanged: _handleDateSelected,
+                                    );
+                                  },
+                                );
+                              }
+
+                              return PageView.builder(
+                                controller: _pageController,
+                                physics: _animationController.value == 1.0
+                                    ? AlwaysScrollableScrollPhysics()
+                                    : NeverScrollableScrollPhysics(),
+                                pageSnapping: true,
+                                onPageChanged: (pageIndex) {
+                                  _currentPage.value = pageIndex;
+                                },
+                                itemCount: _monthViews.length,
+                                itemBuilder: (_, pageIndex) {
+                                  return MonthView(
+                                    monthView: _monthViews[pageIndex],
+                                    todayDate: _todayDate,
+                                    selectedDate: selectedDate,
+                                    onChanged: _handleDateSelected,
+                                  );
+                                },
+                              );
+                            },
+                          );
+                        },
+                      ),
+                    );
+                  },
+                ),
+                HandleBar(
+                  onPressed: () async {
+                    await _animationController.forward();
+                    _animationValue = 1.0;
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),
     );
+  }
+
+  MonthViewBean _generateMonthViewDate(
+    DateTime baseDate,
+    int month, [
+    int weeksAmount = 6,
+  ]) {
+    final firstMonthDate = DateTime(baseDate.year, month, 1);
+    final firstViewDate = firstMonthDate.subtract(Duration(
+      days: firstMonthDate.weekday,
+    ));
+
+    return MonthViewBean(
+      firstMonthDate,
+      List.generate(
+        weeksAmount * 7,
+        (index) => firstViewDate.add(Duration(days: index)).toZeroTime(),
+        growable: false,
+      ),
+    );
+  }
+
+  void _handleDateSelected(DateTime date) {
+    _controller.value = date;
   }
 
   void _handleFinishDrag() async {
@@ -185,11 +237,18 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
       await _animationController.reverse();
       _animationValue = 0.0;
     }
+
+    setState(() {
+      _weekView.value = _animationValue < 1.0;
+    });
   }
 
   void _handleTodayPressed() {
     _controller.value = _todayDate;
-    _pageController.jumpToPage(6);
+
+    if (!_weekView.value) {
+      _pageController.jumpToPage(6);
+    }
   }
 
   @override
