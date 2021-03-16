@@ -121,7 +121,7 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
           days: weekIndex * 7,
         ));
 
-final weekDays = firstDateOfNextWeek.weekDates();
+        final weekDays = firstDateOfNextWeek.weekDates();
 
         print(weekDays);
 
