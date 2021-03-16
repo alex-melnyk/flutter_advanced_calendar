@@ -21,7 +21,7 @@ class WeekView extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.symmetric(
-         vertical: 1.0,
+        vertical: 1.0,
       ),
       child: Row(
         mainAxisSize: MainAxisSize.max,
@@ -33,7 +33,8 @@ class WeekView extends StatelessWidget {
 
             final isToday = date.isAtSameMomentAs(todayDate);
             final isSelected = date.isAtSameMomentAs(selectedDate);
-            final isHighlight = date.month == highlightMonth;
+            final isHighlight =
+                highlightMonth == null ? true : date.month == highlightMonth;
 
             return Column(
               children: [

@@ -10,7 +10,7 @@ class MonthView extends StatelessWidget {
     this.highlightMonth,
   }) : super(key: key);
 
-  final MonthViewBean monthView;
+  final ViewRange monthView;
   final DateTime todayDate;
   final DateTime selectedDate;
   final ValueChanged<DateTime> onChanged;

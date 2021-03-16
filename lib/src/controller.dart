@@ -1,25 +1,21 @@
 import 'package:flutter/widgets.dart';
 
+import 'datetime_util.dart';
+
 /// Advanced Calendar controller that manage selection date state.
 class AdvancedCalendarController extends ValueNotifier<DateTime> {
   AdvancedCalendarController._(DateTime value) : super(value);
 
   /// Generates controller with today date selected.
   AdvancedCalendarController.today()
-      : this._(_dateTimeToDayStart(DateTime.now()));
+      : this._(DateTime.now().toZeroTime());
 
   /// Generates controller with custom date selected.
   AdvancedCalendarController.custom(DateTime dateTime)
-      : this._(_dateTimeToDayStart(dateTime));
-
-  static DateTime _dateTimeToDayStart(DateTime dateTime) => DateTime(
-        dateTime.year,
-        dateTime.month,
-        dateTime.day,
-      );
+      : this._(dateTime.toZeroTime());
 
   @override
   set value(DateTime newValue) {
-    super.value = _dateTimeToDayStart(newValue);
+    super.value = newValue.toZeroTime();
   }
 }

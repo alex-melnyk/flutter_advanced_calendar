@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import 'controller.dart';
+import 'datetime_util.dart';
 
 part 'date_box.dart';
-
-part 'datetime_util.dart';
 
 part 'handlebar.dart';
 
@@ -37,9 +36,17 @@ class AdvancedCalendar extends StatefulWidget {
 
 class _AdvancedCalendarState extends State<AdvancedCalendar>
     with SingleTickerProviderStateMixin {
-  final _pageController = PageController(initialPage: 6);
+  static const _preloadMonthAmount = 13;
+  static const _preloadWeeksAmount = 21;
+
+  final _monthPageController = PageController(
+    initialPage: _preloadMonthAmount ~/ 2,
+  );
+  final _weekPageController = PageController(
+    initialPage: _preloadWeeksAmount ~/ 2,
+  );
   final _currentPage = ValueNotifier<int>(6);
-  final _weekView = ValueNotifier<bool>(false);
+  final _weekView = ValueNotifier<bool>(true);
   AnimationController _animationController;
   AdvancedCalendarController _controller;
 
@@ -47,7 +54,8 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
   double _animationValue;
 
   DateTime _todayDate;
-  List<MonthViewBean> _monthViews;
+  List<ViewRange> _monthRangeList;
+  List<List<DateTime>> _weekRangeList;
 
   @override
   void initState() {
@@ -56,7 +64,7 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
     _animationController = AnimationController(
       vsync: this,
       duration: Duration(milliseconds: 300),
-      value: 1.0,
+      value: 0,
     );
 
     _animationValue = _animationController.value;
@@ -65,11 +73,62 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
 
     _controller = widget.controller ?? AdvancedCalendarController.today();
 
-    _monthViews = List.generate(13, (index) {
-      final offset = index - 6;
+    _monthRangeList = List.generate(
+      _preloadMonthAmount,
+      (index) => _generateMonthViewDate(
+        _todayDate,
+        _todayDate.month + (index - _monthPageController.initialPage),
+      ),
+    );
 
-      return _generateMonthViewDate(_todayDate, _todayDate.month + offset);
+    _weekRangeList = _generateWeeks(_controller.value, _preloadWeeksAmount);
+
+    _weekView.addListener(() {
+      _weekRangeList = _generateWeeks(_controller.value);
     });
+  }
+
+  ViewRange _generateMonthViewDate(
+    DateTime date,
+    int month, [
+    int weeksAmount = 6,
+  ]) {
+    final firstMonthDate = DateTime.utc(date.year, month, 1);
+    final firstViewDate = firstMonthDate.firstDayOfWeek();
+
+    return ViewRange(
+      firstMonthDate,
+      List.generate(
+        weeksAmount * 7,
+        (index) => firstViewDate.add(Duration(days: index)),
+        growable: false,
+      ),
+    );
+  }
+
+  List<List<DateTime>> _generateWeeks(
+    DateTime date, [
+    int weeksAmount = 21,
+  ]) {
+    final firstViewDate = date.firstDayOfWeek().subtract(Duration(
+          days: (weeksAmount ~/ 2) * 7,
+        ));
+
+    return List.generate(
+      weeksAmount,
+      (weekIndex) {
+        final firstDateOfNextWeek = firstViewDate.add(Duration(
+          days: weekIndex * 7,
+        ));
+
+final weekDays = firstDateOfNextWeek.weekDates();
+
+        print(weekDays);
+
+        return weekDays;
+      },
+      growable: false,
+    );
   }
 
   @override
@@ -113,7 +172,7 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
                   valueListenable: _currentPage,
                   builder: (_, value, __) {
                     return Header(
-                      monthDate: _monthViews[_currentPage.value].firstDay,
+                      monthDate: _monthRangeList[_currentPage.value].firstDay,
                       onPressed: _handleTodayPressed,
                     );
                   },
@@ -143,39 +202,33 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
                                 return ValueListenableBuilder<int>(
                                   valueListenable: _currentPage,
                                   builder: (_, pageIndex, __) {
-                                    final monthView = _monthViews[pageIndex];
-
-                                    final weekIndex = selectedDate
-                                        .findWeekIndex(monthView.dates);
-
-                                    final startIndex = weekIndex * 7;
-
-                                    final selectedWeek = monthView.dates
-                                        .sublist(startIndex, startIndex + 7);
-
-                                    return WeekView(
-                                      dates: selectedWeek,
-                                      selectedDate: selectedDate,
-                                      highlightMonth: monthView.firstDay.month,
-                                      onChanged: _handleDateSelected,
+                                    return PageView.builder(
+                                      controller: _weekPageController,
+                                      itemCount: _weekRangeList.length,
+                                      itemBuilder: (context, index) {
+                                        return WeekView(
+                                          dates: _weekRangeList[index],
+                                          selectedDate: selectedDate,
+                                          onChanged: _handleDateSelected,
+                                        );
+                                      },
                                     );
                                   },
                                 );
                               }
 
                               return PageView.builder(
-                                controller: _pageController,
-                                physics: _animationController.value == 1.0
-                                    ? AlwaysScrollableScrollPhysics()
-                                    : NeverScrollableScrollPhysics(),
-                                pageSnapping: true,
                                 onPageChanged: (pageIndex) {
                                   _currentPage.value = pageIndex;
                                 },
-                                itemCount: _monthViews.length,
+                                controller: _monthPageController,
+                                physics: _animationController.value == 1.0
+                                    ? AlwaysScrollableScrollPhysics()
+                                    : NeverScrollableScrollPhysics(),
+                                itemCount: _monthRangeList.length,
                                 itemBuilder: (_, pageIndex) {
                                   return MonthView(
-                                    monthView: _monthViews[pageIndex],
+                                    monthView: _monthRangeList[pageIndex],
                                     todayDate: _todayDate,
                                     selectedDate: selectedDate,
                                     onChanged: _handleDateSelected,
@@ -199,26 +252,6 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
             ),
           ),
         ),
-      ),
-    );
-  }
-
-  MonthViewBean _generateMonthViewDate(
-    DateTime baseDate,
-    int month, [
-    int weeksAmount = 6,
-  ]) {
-    final firstMonthDate = DateTime(baseDate.year, month, 1);
-    final firstViewDate = firstMonthDate.subtract(Duration(
-      days: firstMonthDate.weekday,
-    ));
-
-    return MonthViewBean(
-      firstMonthDate,
-      List.generate(
-        weeksAmount * 7,
-        (index) => firstViewDate.add(Duration(days: index)).toZeroTime(),
-        growable: false,
       ),
     );
   }
@@ -247,14 +280,14 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
     _controller.value = _todayDate;
 
     if (!_weekView.value) {
-      _pageController.jumpToPage(6);
+      _monthPageController.jumpToPage(6);
     }
   }
 
   @override
   void dispose() {
     _animationController.dispose();
-    _pageController.dispose();
+    _monthPageController.dispose();
 
     if (widget.controller == null) {
       _controller.dispose();
