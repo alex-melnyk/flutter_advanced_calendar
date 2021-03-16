@@ -1,3 +1,7 @@
+## 0.0.2
+
+* Switch between month and week views.
+
 ## 0.0.1+2
 
 * Code formatted.
