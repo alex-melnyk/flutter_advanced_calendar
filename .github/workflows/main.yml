@@ -1,19 +1,28 @@
 name: Publish plugin
 
-on: [push]
+on:
+  push:
+    tags:
+      - 'v*'
 
 jobs:
   publish:
-
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
       - name: Publish
         uses: sakebook/actions-flutter-pub-publisher@v1.3.1
         with:
           credential: ${{ secrets.CREDENTIAL_JSON }}
-          flutter_package: false
+          flutter_package: true
           skip_test: true
           dry_run: true
+      - name: Publish
+        uses: sakebook/actions-flutter-pub-publisher@v1.3.1
+        with:
+          credential: ${{ secrets.CREDENTIAL_JSON }}
+          flutter_package: true
+          skip_test: true
+          dry_run: false
