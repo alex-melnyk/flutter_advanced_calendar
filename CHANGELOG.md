@@ -1,3 +1,7 @@
+## 0.0.3
+
+* Week & month view switching with date selection fixed.
+
 ## 0.0.2
 
 * Switch between month and week views.
