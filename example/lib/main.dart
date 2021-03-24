@@ -11,7 +11,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final _calendarController = AdvancedCalendarController.today();
+  final _calendarControllerToday = AdvancedCalendarController.today();
+  final _calendarControllerCustom = AdvancedCalendarController.custom(DateTime(2021, 2, 15));
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,10 @@ class _MyAppState extends State<MyApp> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             AdvancedCalendar(
-              controller: _calendarController,
+              controller: _calendarControllerToday,
+            ),
+            AdvancedCalendar(
+              controller: _calendarControllerCustom,
             ),
           ],
         ),

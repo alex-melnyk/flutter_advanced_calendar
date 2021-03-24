@@ -62,9 +62,9 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
 
     _animationValue = _animationController.value;
 
-    _todayDate = DateTime.now().toZeroTime();
-
     _controller = widget.controller ?? AdvancedCalendarController.today();
+
+    _todayDate = _controller.value;
 
     _monthRangeList = List.generate(
       _preloadMonthAmount,

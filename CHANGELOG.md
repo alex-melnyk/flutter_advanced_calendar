@@ -1,3 +1,7 @@
+## 0.0.4
+
+* Custom date initialization fixed.
+
 ## 0.0.3
 
 * Week & month view switching with date selection fixed.
