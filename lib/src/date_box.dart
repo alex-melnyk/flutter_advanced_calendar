@@ -1,21 +1,37 @@
 part of 'widget.dart';
 
+/// Unit of calendar.
 class DateBox extends StatelessWidget {
   const DateBox({
     Key key,
     @required this.child,
     this.color,
+    this.width = 24.0,
+    this.height = 24.0,
+    this.borderRadius = const BorderRadius.all(Radius.circular(8.0)),
     this.onPressed,
   }) : super(key: key);
 
+  /// Child widget.
   final Widget child;
+
+  /// Background color.
   final Color color;
+
+  /// Widget width.
+  final double width;
+
+  /// Widget height.
+  final double height;
+
+  /// Container border radius.
+  final BorderRadius borderRadius;
+
+  /// Pressed callback function.
   final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
-    const borderRadius = const BorderRadius.all(Radius.circular(8.0));
-
     return UnconstrainedBox(
       alignment: Alignment.center,
       child: InkResponse(
@@ -25,8 +41,8 @@ class DateBox extends StatelessWidget {
         highlightShape: BoxShape.rectangle,
         child: AnimatedContainer(
           duration: Duration(milliseconds: 150),
-          width: 24.0,
-          height: 24.0,
+          width: width,
+          height: height,
           alignment: Alignment.center,
           decoration: BoxDecoration(
             color: color,

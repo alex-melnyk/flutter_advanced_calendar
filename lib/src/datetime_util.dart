@@ -21,4 +21,24 @@ extension DateTimeUtil on DateTime {
       growable: false,
     );
   }
+
+  /// Generates list of list with [DateTime]
+  /// according to [date] and [weeksAmount].
+  List<List<DateTime>> generateWeeks(int weeksAmount) {
+    final firstViewDate = this.firstDayOfWeek().subtract(Duration(
+          days: (weeksAmount ~/ 2) * 7,
+        ));
+
+    return List.generate(
+      weeksAmount,
+      (weekIndex) {
+        final firstDateOfNextWeek = firstViewDate.add(Duration(
+          days: weekIndex * 7,
+        ));
+
+        return firstDateOfNextWeek.weekDates();
+      },
+      growable: false,
+    );
+  }
 }

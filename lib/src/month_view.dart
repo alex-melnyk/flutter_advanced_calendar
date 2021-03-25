@@ -6,25 +6,27 @@ class MonthView extends StatelessWidget {
     @required this.monthView,
     @required this.todayDate,
     @required this.selectedDate,
-    @required this.onChanged,
-    this.highlightMonth,
+    @required this.weekLineHeight,
+    @required this.weeksAmount,
+    this.onChanged,
   }) : super(key: key);
 
   final ViewRange monthView;
   final DateTime todayDate;
   final DateTime selectedDate;
+  final double weekLineHeight;
+  final int weeksAmount;
   final ValueChanged<DateTime> onChanged;
-  final int highlightMonth;
 
   @override
   Widget build(BuildContext context) {
     final index = selectedDate.findWeekIndex(monthView.dates);
-    final offset = (index / 5) * 2 - 1.0;
+    final offset = index / (weeksAmount - 1) * 2 - 1.0;
 
     return OverflowBox(
       alignment: Alignment(0, offset),
-      minHeight: monthViewWeekHeight,
-      maxHeight: monthViewWeekHeight * 6.0,
+      minHeight: weekLineHeight,
+      maxHeight: weekLineHeight * weeksAmount,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: List<Widget>.generate(

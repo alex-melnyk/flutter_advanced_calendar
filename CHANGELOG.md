@@ -1,3 +1,7 @@
+## 0.0.5
+
+* API provided, docs improvement.
+
 ## 0.0.4
 
 * Custom date initialization fixed.
