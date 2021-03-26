@@ -2,18 +2,18 @@ part of 'widget.dart';
 
 class WeekView extends StatelessWidget {
   WeekView({
-    Key key,
-    @required this.dates,
-    @required this.selectedDate,
+    Key? key,
+    required this.dates,
+    required this.selectedDate,
     this.highlightMonth,
     this.onChanged,
   }) : super(key: key);
 
   final DateTime todayDate = DateTime.now().toZeroTime();
   final List<DateTime> dates;
-  final int highlightMonth;
+  final int? highlightMonth;
   final DateTime selectedDate;
-  final ValueChanged<DateTime> onChanged;
+  final ValueChanged<DateTime>? onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +39,7 @@ class WeekView extends StatelessWidget {
             return Column(
               children: [
                 DateBox(
-                  onPressed: onChanged != null ? () => onChanged(date) : null,
+                  onPressed: onChanged != null ? () => onChanged!(date) : null,
                   color: isSelected
                       ? theme.primaryColor
                       : isToday

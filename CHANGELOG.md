@@ -1,3 +1,7 @@
+## 1.0.0
+
+* Null-Safety migrated.
+
 ## 0.0.6
 
 * Documentation improvements.
