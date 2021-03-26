@@ -3,8 +3,8 @@ part of 'widget.dart';
 /// Unit of calendar.
 class DateBox extends StatelessWidget {
   const DateBox({
-    Key key,
-    @required this.child,
+    Key? key,
+    required this.child,
     this.color,
     this.width = 24.0,
     this.height = 24.0,
@@ -16,7 +16,7 @@ class DateBox extends StatelessWidget {
   final Widget child;
 
   /// Background color.
-  final Color color;
+  final Color? color;
 
   /// Widget width.
   final double width;
@@ -28,7 +28,7 @@ class DateBox extends StatelessWidget {
   final BorderRadius borderRadius;
 
   /// Pressed callback function.
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {

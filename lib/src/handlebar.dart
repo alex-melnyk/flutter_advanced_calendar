@@ -2,7 +2,7 @@ part of 'widget.dart';
 
 class HandleBar extends StatelessWidget {
   const HandleBar({
-    Key key,
+    Key? key,
     this.decoration,
     this.margin = const EdgeInsets.only(
       top: 8.0,
@@ -10,9 +10,9 @@ class HandleBar extends StatelessWidget {
     this.onPressed,
   }) : super(key: key);
 
-  final BoxDecoration decoration;
+  final BoxDecoration? decoration;
   final EdgeInsetsGeometry margin;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {

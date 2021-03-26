@@ -2,8 +2,8 @@ part of 'widget.dart';
 
 class Header extends StatelessWidget {
   const Header({
-    Key key,
-    this.monthDate,
+    Key? key,
+    required this.monthDate,
     this.margin = const EdgeInsets.only(
       left: 16.0,
       right: 8.0,
@@ -16,7 +16,7 @@ class Header extends StatelessWidget {
   static final _dateFormatter = DateFormat().add_yMMMM();
   final DateTime monthDate;
   final EdgeInsetsGeometry margin;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {

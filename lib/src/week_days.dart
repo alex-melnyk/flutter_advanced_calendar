@@ -3,7 +3,7 @@ part of 'widget.dart';
 /// Week day names line.
 class WeekDays extends StatelessWidget {
   const WeekDays({
-    Key key,
+    Key? key,
     this.weekNames = const <String>['S', 'M', 'T', 'W', 'T', 'F', 'S'],
     this.style,
   })  : assert(weekNames != null, '`weekNames` must not be null'),
@@ -14,12 +14,12 @@ class WeekDays extends StatelessWidget {
   final List<String> weekNames;
 
   /// Text style.
-  final TextStyle style;
+  final TextStyle? style;
 
   @override
   Widget build(BuildContext context) {
     return DefaultTextStyle(
-      style: style,
+      style: style!,
       child: Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceAround,

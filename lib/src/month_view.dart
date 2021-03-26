@@ -2,21 +2,21 @@ part of 'widget.dart';
 
 class MonthView extends StatelessWidget {
   const MonthView({
-    Key key,
-    @required this.monthView,
-    @required this.todayDate,
-    @required this.selectedDate,
-    @required this.weekLineHeight,
-    @required this.weeksAmount,
+    Key? key,
+    required this.monthView,
+    required this.todayDate,
+    required this.selectedDate,
+    required this.weekLineHeight,
+    required this.weeksAmount,
     this.onChanged,
   }) : super(key: key);
 
   final ViewRange monthView;
-  final DateTime todayDate;
+  final DateTime? todayDate;
   final DateTime selectedDate;
   final double weekLineHeight;
   final int weeksAmount;
-  final ValueChanged<DateTime> onChanged;
+  final ValueChanged<DateTime>? onChanged;
 
   @override
   Widget build(BuildContext context) {

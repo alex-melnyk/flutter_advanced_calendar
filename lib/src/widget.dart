@@ -15,7 +15,7 @@ part 'week_view.dart';
 /// Advanced Calendar widget.
 class AdvancedCalendar extends StatefulWidget {
   const AdvancedCalendar({
-    Key key,
+    Key? key,
     this.controller,
     this.weekLineHeight = 32.0,
     this.preloadMonthViewAmount = 13,
@@ -24,7 +24,7 @@ class AdvancedCalendar extends StatefulWidget {
   }) : super(key: key);
 
   /// Calendar selection date controller.
-  final AdvancedCalendarController controller;
+  final AdvancedCalendarController? controller;
 
   /// Height of week line.
   final double weekLineHeight;
@@ -44,18 +44,17 @@ class AdvancedCalendar extends StatefulWidget {
 
 class _AdvancedCalendarState extends State<AdvancedCalendar>
     with SingleTickerProviderStateMixin {
-  ValueNotifier<int> _monthViewCurrentPage;
-  PageController _monthPageController;
-  PageController _weekPageController;
-  AnimationController _animationController;
-  AdvancedCalendarController _controller;
+  late ValueNotifier<int> _monthViewCurrentPage;
+  late AnimationController _animationController;
+  late AdvancedCalendarController _controller;
+  late double _animationValue;
+  late List<ViewRange> _monthRangeList;
+  late List<List<DateTime>> _weekRangeList;
 
-  Offset _captureOffset;
-  double _animationValue;
-
-  DateTime _todayDate;
-  List<ViewRange> _monthRangeList;
-  List<List<DateTime>> _weekRangeList;
+  PageController? _monthPageController;
+  PageController? _weekPageController;
+  Offset? _captureOffset;
+  DateTime? _todayDate;
 
   @override
   void initState() {
@@ -90,8 +89,8 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
     _monthRangeList = List.generate(
       widget.preloadMonthViewAmount,
       (index) => ViewRange.generateDates(
-        _todayDate,
-        _todayDate.month + (index - _monthPageController.initialPage),
+        _todayDate!,
+        _todayDate!.month + (index - _monthPageController!.initialPage),
         widget.weeksInMonthViewAmount,
       ),
     );
@@ -103,7 +102,7 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
       _weekRangeList =
           _controller.value.generateWeeks(widget.preloadWeekViewAmount);
 
-      _weekPageController.jumpToPage(widget.preloadWeekViewAmount ~/ 2);
+      _weekPageController!.jumpToPage(widget.preloadWeekViewAmount ~/ 2);
     });
   }
 
@@ -111,7 +110,7 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    final commonTextStyle = theme.textTheme.bodyText1.copyWith(
+    final commonTextStyle = theme.textTheme.bodyText1!.copyWith(
       fontSize: 14.0,
     );
 
@@ -126,7 +125,7 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
           onVerticalDragUpdate: (details) {
             final moveOffset = details.globalPosition;
 
-            final diffY = moveOffset.dy - _captureOffset.dy;
+            final diffY = moveOffset.dy - _captureOffset!.dy;
 
             _animationController.value =
                 _animationValue + diffY / (widget.weekLineHeight * 5);
@@ -140,7 +139,7 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ValueListenableBuilder(
+                ValueListenableBuilder<int>(
                   valueListenable: _monthViewCurrentPage,
                   builder: (_, value, __) {
                     return Header(
@@ -291,13 +290,13 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
   void _handleTodayPressed() {
     _controller.value = DateTime.now().toZeroTime();
 
-    _monthPageController.jumpToPage(widget.preloadMonthViewAmount ~/ 2);
+    _monthPageController!.jumpToPage(widget.preloadMonthViewAmount ~/ 2);
   }
 
   @override
   void dispose() {
     _animationController.dispose();
-    _monthPageController.dispose();
+    _monthPageController!.dispose();
     _monthViewCurrentPage.dispose();
 
     if (widget.controller == null) {
