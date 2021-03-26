@@ -5,17 +5,11 @@ import 'controller.dart';
 import 'datetime_util.dart';
 
 part 'date_box.dart';
-
 part 'handlebar.dart';
-
 part 'header.dart';
-
 part 'month_view.dart';
-
 part 'month_view_bean.dart';
-
 part 'week_days.dart';
-
 part 'week_view.dart';
 
 /// Advanced Calendar widget.

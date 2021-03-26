@@ -12,7 +12,8 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final _calendarControllerToday = AdvancedCalendarController.today();
-  final _calendarControllerCustom = AdvancedCalendarController.custom(DateTime(2021, 2, 15));
+  final _calendarControllerCustom =
+      AdvancedCalendarController.custom(DateTime(2021, 2, 15));
 
   @override
   Widget build(BuildContext context) {

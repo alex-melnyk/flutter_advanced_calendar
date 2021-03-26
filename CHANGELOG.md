@@ -1,3 +1,7 @@
+## 0.0.6
+
+* Documentation improvements.
+
 ## 0.0.5
 
 * API provided, docs improvement.
