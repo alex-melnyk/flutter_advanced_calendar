@@ -27,9 +27,33 @@ Custom Date Calendar
 ```dart
 final _controller = AdvancedCalendarController.custom(DateTime(2021, 2, 15));
 // ...
-AdvancedCalendar(
-    controller: _controller,
-)
+final theme = ThemeData.light();
+
+Theme(
+  data: theme.copyWith(
+    textTheme: theme.textTheme.copyWith(
+      subtitle1: Ttheme.textTheme.subtitle1.copyWith(
+        fontSize: 16,
+        color: theme.accentColor,
+      ),
+      bodyText1: theme.textTheme.bodyText1.copyWith(
+        fontSize: 14,
+        color: Colors.black54,
+      ),
+      bodyText2: theme.textTheme.bodyText1.copyWith(
+        fontSize: 12,
+        color: Colors.black87,
+      ),
+    ),
+    primaryColor: Colors.red,
+    highlightColor: Colors.yellow,
+    disabledColor: Colors.green,
+  ),
+  child: AdvancedCalendar(
+    controller: _calendarControllerCustom,
+    weekLineHeight: 48.0,
+  ),
+),
 // ...
 ```
 
