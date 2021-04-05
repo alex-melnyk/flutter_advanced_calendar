@@ -38,6 +38,7 @@ class MonthView extends StatelessWidget {
               dates: monthView.dates.sublist(weekStart, weekStart + 7),
               selectedDate: selectedDate,
               highlightMonth: monthView.firstDay.month,
+              lineHeight: weekLineHeight,
               onChanged: onChanged,
             );
           },

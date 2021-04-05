@@ -110,14 +110,10 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    final commonTextStyle = theme.textTheme.bodyText1!.copyWith(
-      fontSize: 14.0,
-    );
-
     return Material(
       color: Colors.transparent,
       child: DefaultTextStyle(
-        style: commonTextStyle,
+        style: theme.textTheme.bodyText2!,
         child: GestureDetector(
           onVerticalDragStart: (details) {
             _captureOffset = details.globalPosition;
@@ -150,7 +146,7 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
                   },
                 ),
                 WeekDays(
-                  style: commonTextStyle.copyWith(
+                  style: theme.textTheme.bodyText1!.copyWith(
                     color: theme.hintColor,
                   ),
                 ),
@@ -232,6 +228,7 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
                                               return WeekView(
                                                 dates: _weekRangeList[index],
                                                 selectedDate: selectedDate,
+                                                lineHeight: widget.weekLineHeight,
                                                 onChanged:
                                                     _handleWeekDateChanged,
                                               );
