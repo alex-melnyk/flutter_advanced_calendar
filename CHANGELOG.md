@@ -1,3 +1,9 @@
+## 1.0.1
+
+* Week line height fixed.
+* Theme support improvement.
+* Theme example added.
+
 ## 1.0.0
 
 * Null-Safety migrated.
