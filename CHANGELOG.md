@@ -1,3 +1,7 @@
+## 1.0.1+1
+
+* LICENSE CHANGED.
+
 ## 1.0.1
 
 * Week line height fixed.
