@@ -8,6 +8,7 @@ class WeekView extends StatelessWidget {
     required this.lineHeight,
     this.highlightMonth,
     this.onChanged,
+    required this.event,
   }) : super(key: key);
 
   final DateTime todayDate = DateTime.now().toZeroTime();
@@ -16,7 +17,11 @@ class WeekView extends StatelessWidget {
   final int? highlightMonth;
   final DateTime selectedDate;
   final ValueChanged<DateTime>? onChanged;
-
+  final List<DateTime>? event;
+  // final List<DateTime> eventt = [
+  //   DateTime.utc(2021, 08, 10, 12),
+  //   DateTime.utc(2021, 08, 11, 12)
+  // ];
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -37,23 +42,36 @@ class WeekView extends StatelessWidget {
             final isHighlight =
                 highlightMonth == null ? true : date.month == highlightMonth;
 
-            return DateBox(
-              onPressed: onChanged != null ? () => onChanged!(date) : null,
-              color: isSelected
-                  ? theme.primaryColor
-                  : isToday
-                      ? theme.highlightColor
-                      : null,
-              child: Text(
-                '${date.day}',
-                style: TextStyle(
-                  color: isSelected || isToday
-                      ? theme.colorScheme.onPrimary
-                      : isHighlight
-                          ? null
-                          : theme.disabledColor,
+            return Column(
+              children: [
+                DateBox(
+                  onPressed: onChanged != null ? () => onChanged!(date) : null,
+                  color: isSelected
+                      ? theme.primaryColor
+                      : isToday
+                          ? theme.highlightColor
+                          : null,
+                  child: Text(
+                    '${date.day}',
+                    style: TextStyle(
+                      color: isSelected || isToday
+                          ? theme.colorScheme.onPrimary
+                          : isHighlight
+                              ? null
+                              : theme.disabledColor,
+                    ),
+                  ),
                 ),
-              ),
+                for (var list in event ?? [])
+                  list == date
+                      ? Container(
+                          height: 6,
+                          width: 6,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(50),
+                              color: theme.primaryColor))
+                      : SizedBox(),
+              ],
             );
           },
           growable: false,

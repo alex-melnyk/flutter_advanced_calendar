@@ -55,6 +55,10 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
   PageController? _weekPageController;
   Offset? _captureOffset;
   DateTime? _todayDate;
+  final List<DateTime> event = [
+    DateTime.utc(2021, 08, 10, 12),
+    DateTime.utc(2021, 08, 11, 12)
+  ];
 
   @override
   void initState() {
@@ -192,6 +196,7 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
                                         weeksAmount:
                                             widget.weeksInMonthViewAmount,
                                         onChanged: _handleDateChanged,
+                                        event: event,
                                       );
                                     },
                                   ),
@@ -228,9 +233,11 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
                                               return WeekView(
                                                 dates: _weekRangeList[index],
                                                 selectedDate: selectedDate,
-                                                lineHeight: widget.weekLineHeight,
+                                                lineHeight:
+                                                    widget.weekLineHeight,
                                                 onChanged:
                                                     _handleWeekDateChanged,
+                                                event: event,
                                               );
                                             },
                                           ),
