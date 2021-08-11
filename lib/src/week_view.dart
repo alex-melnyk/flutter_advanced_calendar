@@ -18,10 +18,7 @@ class WeekView extends StatelessWidget {
   final DateTime selectedDate;
   final ValueChanged<DateTime>? onChanged;
   final List<DateTime>? event;
-  // final List<DateTime> eventt = [
-  //   DateTime.utc(2021, 08, 10, 12),
-  //   DateTime.utc(2021, 08, 11, 12)
-  // ];
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -43,6 +40,7 @@ class WeekView extends StatelessWidget {
                 highlightMonth == null ? true : date.month == highlightMonth;
 
             return Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 DateBox(
                   onPressed: onChanged != null ? () => onChanged!(date) : null,
@@ -62,21 +60,28 @@ class WeekView extends StatelessWidget {
                     ),
                   ),
                 ),
-                for (var list in event ?? [])
-                  list == date
-                      ? Container(
-                          height: 6,
-                          width: 6,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(50),
-                              color: theme.primaryColor))
-                      : SizedBox(),
+                point(context, date),
               ],
             );
           },
           growable: false,
         ),
       ),
+    );
+  }
+
+  Widget point(context, DateTime date) {
+    return Column(
+      children: List<Widget>.generate(
+          event!.length,
+          (index) => event![index] == date
+              ? Container(
+                  height: 6,
+                  width: 6,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(50),
+                      color: Theme.of(context).primaryColor))
+              : SizedBox()),
     );
   }
 }

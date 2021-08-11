@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -17,6 +18,7 @@ class AdvancedCalendar extends StatefulWidget {
   const AdvancedCalendar({
     Key? key,
     this.controller,
+    this.event,
     this.weekLineHeight = 32.0,
     this.preloadMonthViewAmount = 13,
     this.preloadWeekViewAmount = 21,
@@ -38,6 +40,9 @@ class AdvancedCalendar extends StatefulWidget {
   /// Weeks lines amount in month view.
   final int weeksInMonthViewAmount;
 
+  //point
+  final List<DateTime>? event;
+
   @override
   _AdvancedCalendarState createState() => _AdvancedCalendarState();
 }
@@ -55,11 +60,6 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
   PageController? _weekPageController;
   Offset? _captureOffset;
   DateTime? _todayDate;
-  final List<DateTime> event = [
-    DateTime.utc(2021, 08, 10, 12),
-    DateTime.utc(2021, 08, 11, 12)
-  ];
-
   @override
   void initState() {
     super.initState();
@@ -87,7 +87,6 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
     _animationValue = _animationController.value;
 
     _controller = widget.controller ?? AdvancedCalendarController.today();
-
     _todayDate = _controller.value;
 
     _monthRangeList = List.generate(
@@ -113,7 +112,6 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-
     return Material(
       color: Colors.transparent,
       child: DefaultTextStyle(
@@ -196,7 +194,7 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
                                         weeksAmount:
                                             widget.weeksInMonthViewAmount,
                                         onChanged: _handleDateChanged,
-                                        event: event,
+                                        event: widget.event ?? [],
                                       );
                                     },
                                   ),
@@ -237,7 +235,7 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
                                                     widget.weekLineHeight,
                                                 onChanged:
                                                     _handleWeekDateChanged,
-                                                event: event,
+                                                event: widget.event ?? [],
                                               );
                                             },
                                           ),

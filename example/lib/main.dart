@@ -13,8 +13,9 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   final _calendarControllerToday = AdvancedCalendarController.today();
   final _calendarControllerCustom =
-      AdvancedCalendarController.custom(DateTime(2021, 2, 15));
-
+      AdvancedCalendarController.custom(DateTime(2021, 2, 16));
+  //list event
+  List<DateTime> event = [DateTime.utc(2021, 08, 10, 12),DateTime.utc(2021, 08, 11, 12)];
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -32,29 +33,31 @@ class _MyAppState extends State<MyApp> {
           children: [
             AdvancedCalendar(
               controller: _calendarControllerToday,
+              event: event,
             ),
             Theme(
               data: ThemeData.light().copyWith(
                 textTheme: ThemeData.light().textTheme.copyWith(
-                  subtitle1: ThemeData.light().textTheme.subtitle1.copyWith(
-                    fontSize: 16,
-                    color: theme.accentColor,
-                  ),
-                  bodyText1: ThemeData.light().textTheme.bodyText1.copyWith(
-                    fontSize: 14,
-                    color: Colors.black54,
-                  ),
-                  bodyText2: ThemeData.light().textTheme.bodyText1.copyWith(
-                    fontSize: 12,
-                    color: Colors.black87,
-                  ),
-                ),
+                      subtitle1: ThemeData.light().textTheme.subtitle1.copyWith(
+                            fontSize: 16,
+                            color: theme.accentColor,
+                          ),
+                      bodyText1: ThemeData.light().textTheme.bodyText1.copyWith(
+                            fontSize: 14,
+                            color: Colors.black54,
+                          ),
+                      bodyText2: ThemeData.light().textTheme.bodyText1.copyWith(
+                            fontSize: 12,
+                            color: Colors.black87,
+                          ),
+                    ),
                 primaryColor: Colors.red,
                 highlightColor: Colors.yellow,
                 disabledColor: Colors.green,
               ),
               child: AdvancedCalendar(
                 controller: _calendarControllerCustom,
+                event: event,
                 weekLineHeight: 48.0,
               ),
             ),
