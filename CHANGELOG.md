@@ -1,3 +1,7 @@
+## 1.1.0
+
+* Dots indicator feature implemented.
+
 ## 1.0.1+1
 
 * LICENSE CHANGED.
