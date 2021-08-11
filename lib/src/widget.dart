@@ -18,7 +18,7 @@ class AdvancedCalendar extends StatefulWidget {
   const AdvancedCalendar({
     Key? key,
     this.controller,
-    this.event,
+    this.events,
     this.weekLineHeight = 32.0,
     this.preloadMonthViewAmount = 13,
     this.preloadWeekViewAmount = 21,
@@ -40,8 +40,8 @@ class AdvancedCalendar extends StatefulWidget {
   /// Weeks lines amount in month view.
   final int weeksInMonthViewAmount;
 
-  //point
-  final List<DateTime>? event;
+  /// List of points for the week and mounth
+  final List<DateTime>? events;
 
   @override
   _AdvancedCalendarState createState() => _AdvancedCalendarState();
@@ -194,7 +194,7 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
                                         weeksAmount:
                                             widget.weeksInMonthViewAmount,
                                         onChanged: _handleDateChanged,
-                                        event: widget.event ?? [],
+                                        event: widget.events,
                                       );
                                     },
                                   ),
@@ -211,7 +211,6 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
                                           (widget.weeksInMonthViewAmount - 1) *
                                           2 -
                                       1.0;
-
                                   return Align(
                                     alignment: Alignment(0.0, offset),
                                     child: IgnorePointer(
@@ -235,7 +234,7 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
                                                     widget.weekLineHeight,
                                                 onChanged:
                                                     _handleWeekDateChanged,
-                                                event: widget.event ?? [],
+                                                event: widget.events,
                                               );
                                             },
                                           ),

@@ -8,7 +8,7 @@ class WeekView extends StatelessWidget {
     required this.lineHeight,
     this.highlightMonth,
     this.onChanged,
-    required this.event,
+    this.event,
   }) : super(key: key);
 
   final DateTime todayDate = DateTime.now().toZeroTime();
@@ -33,14 +33,12 @@ class WeekView extends StatelessWidget {
           7,
           (dayIndex) {
             final date = dates[dayIndex];
-
             final isToday = date.isAtSameMomentAs(todayDate);
             final isSelected = date.isAtSameMomentAs(selectedDate);
             final isHighlight =
                 highlightMonth == null ? true : date.month == highlightMonth;
-
             return Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 DateBox(
                   onPressed: onChanged != null ? () => onChanged!(date) : null,
@@ -60,28 +58,24 @@ class WeekView extends StatelessWidget {
                     ),
                   ),
                 ),
-                point(context, date),
+                Column(
+                  children: List<Widget>.generate(
+                      event != null ? event!.length : 0,
+                      (index) => event![index] == date
+                          ? Container(
+                              height: 6,
+                              width: 6,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(50),
+                                  color: Theme.of(context).primaryColor))
+                          : SizedBox()),
+                )
               ],
             );
           },
           growable: false,
         ),
       ),
-    );
-  }
-
-  Widget point(context, DateTime date) {
-    return Column(
-      children: List<Widget>.generate(
-          event!.length,
-          (index) => event![index] == date
-              ? Container(
-                  height: 6,
-                  width: 6,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(50),
-                      color: Theme.of(context).primaryColor))
-              : SizedBox()),
     );
   }
 }

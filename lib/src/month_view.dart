@@ -9,7 +9,7 @@ class MonthView extends StatelessWidget {
     required this.weekLineHeight,
     required this.weeksAmount,
     this.onChanged,
-    required this.event,
+    this.event,
   }) : super(key: key);
 
   final ViewRange monthView;
@@ -18,7 +18,7 @@ class MonthView extends StatelessWidget {
   final double weekLineHeight;
   final int weeksAmount;
   final ValueChanged<DateTime>? onChanged;
-  final List<DateTime> event;
+  final List<DateTime>? event;
 
   @override
   Widget build(BuildContext context) {
