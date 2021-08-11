@@ -8,7 +8,7 @@ class WeekView extends StatelessWidget {
     required this.lineHeight,
     this.highlightMonth,
     this.onChanged,
-    this.event,
+    this.events,
   }) : super(key: key);
 
   final DateTime todayDate = DateTime.now().toZeroTime();
@@ -17,7 +17,7 @@ class WeekView extends StatelessWidget {
   final int? highlightMonth;
   final DateTime selectedDate;
   final ValueChanged<DateTime>? onChanged;
-  final List<DateTime>? event;
+  final List<DateTime>? events;
 
   @override
   Widget build(BuildContext context) {
@@ -60,8 +60,8 @@ class WeekView extends StatelessWidget {
                 ),
                 Column(
                   children: List<Widget>.generate(
-                      event != null ? event!.length : 0,
-                      (index) => event![index] == date
+                      events != null ? events!.length : 0,
+                      (index) => events![index] == date
                           ? Container(
                               height: 6,
                               width: 6,

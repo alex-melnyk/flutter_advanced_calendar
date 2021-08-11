@@ -14,8 +14,7 @@ class _MyAppState extends State<MyApp> {
   final _calendarControllerToday = AdvancedCalendarController.today();
   final _calendarControllerCustom =
       AdvancedCalendarController.custom(DateTime(2021, 2, 16));
-  //list event
-  List<DateTime> event = [
+  final List<DateTime> events = [
     DateTime.utc(2021, 08, 10, 12),
     DateTime.utc(2021, 08, 11, 12)
   ];
@@ -36,7 +35,7 @@ class _MyAppState extends State<MyApp> {
           children: [
             AdvancedCalendar(
               controller: _calendarControllerToday,
-              events: event,
+              events: events,
             ),
             Theme(
               data: ThemeData.light().copyWith(
@@ -60,7 +59,7 @@ class _MyAppState extends State<MyApp> {
               ),
               child: AdvancedCalendar(
                 controller: _calendarControllerCustom,
-                events: event,
+                events: events,
                 weekLineHeight: 48.0,
               ),
             ),

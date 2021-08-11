@@ -194,7 +194,7 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
                                         weeksAmount:
                                             widget.weeksInMonthViewAmount,
                                         onChanged: _handleDateChanged,
-                                        event: widget.events,
+                                        events: widget.events,
                                       );
                                     },
                                   ),
@@ -234,7 +234,7 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
                                                     widget.weekLineHeight,
                                                 onChanged:
                                                     _handleWeekDateChanged,
-                                                event: widget.events,
+                                                events: widget.events,
                                               );
                                             },
                                           ),
