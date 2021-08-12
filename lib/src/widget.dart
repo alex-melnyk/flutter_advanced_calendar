@@ -224,8 +224,18 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
                                         child: SizedBox(
                                           height: widget.weekLineHeight,
                                           child: PageView.builder(
+                                            onPageChanged: (indexPage) {
+                                              _monthViewCurrentPage.value =
+                                                  _weekRangeList[indexPage]
+                                                          .first
+                                                          .month -
+                                                      2;
+                                              print(
+                                                  _monthViewCurrentPage.value);
+                                            },
                                             controller: _weekPageController,
                                             itemCount: _weekRangeList.length,
+                                            physics: closeMonthScroll(),
                                             itemBuilder: (context, index) {
                                               return WeekView(
                                                 dates: _weekRangeList[index],
@@ -292,6 +302,17 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
     _controller.value = DateTime.now().toZeroTime();
 
     _monthPageController!.jumpToPage(widget.preloadMonthViewAmount ~/ 2);
+  }
+
+  ScrollPhysics closeMonthScroll() {
+    if ((_monthViewCurrentPage.value ==
+            (widget.preloadMonthViewAmount ~/ 2) + 3 ||
+        _monthViewCurrentPage.value ==
+            (widget.preloadMonthViewAmount ~/ 2) - 3)) {
+      return NeverScrollableScrollPhysics();
+    } else {
+      return AlwaysScrollableScrollPhysics();
+    }
   }
 
   @override
