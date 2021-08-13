@@ -44,8 +44,8 @@ class AdvancedCalendar extends StatefulWidget {
   /// List of points for the week and mounth
   final List<DateTime>? events;
 
-  /// The first day of the week starts
-  final DateTime? startWeekDay;
+  /// The first day of the week starts[0-6]
+  final int? startWeekDay;
 
   @override
   _AdvancedCalendarState createState() => _AdvancedCalendarState();
@@ -64,6 +64,8 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
   PageController? _weekPageController;
   Offset? _captureOffset;
   DateTime? _todayDate;
+  List<String>? _weekNames;
+
   @override
   void initState() {
     super.initState();
@@ -112,6 +114,15 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
       );
       _weekPageController!.jumpToPage(widget.preloadWeekViewAmount ~/ 2);
     });
+    if (widget.startWeekDay != null && widget.startWeekDay! < 7) {
+      final time = _controller.value.subtract(
+          Duration(days: _controller.value.weekday - widget.startWeekDay!));
+      final list = List<DateTime>.generate(
+          8, (index) => time.add(Duration(days: index * 1))).toList();
+      _weekNames = List<String>.generate(7, (index) {
+        return DateFormat("EEEE").format(list[index]).split('').first;
+      });
+    }
   }
 
   @override
@@ -156,9 +167,11 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
                   style: theme.textTheme.bodyText1!.copyWith(
                     color: theme.hintColor,
                   ),
-                  weekNames: widget.startWeekDay != null
-                      ? generateWeekNames(widget.startWeekDay!)
-                      : ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
+                  weekNames:
+                      // (widget.startWeekDay != null && widget.startWeekDay! < 7)
+                      _weekNames != null
+                          ? _weekNames!
+                          : ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
                 ),
                 AnimatedBuilder(
                   animation: _animationController,
@@ -320,12 +333,12 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
     }
   }
 
-  List<String> generateWeekNames(DateTime date) {
-    final list = List<DateTime>.generate(
-        8, (index) => date.add(Duration(days: index * 1)));
-    return List<String>.generate(
-        7, (index) => (DateFormat("EEEE").format(list[index]).split('').first));
-  }
+  // List<String> generateWeekNames(DateTime date) {
+  //   final list = List<DateTime>.generate(
+  //       8, (index) => date.add(Duration(days: index * 1)));
+  //   return List<String>.generate(
+  //       7, (index) => (DateFormat("EEEE").format(list[index]).split('').first));
+  // }
 
   @override
   void dispose() {

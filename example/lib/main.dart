@@ -18,7 +18,6 @@ class _MyAppState extends State<MyApp> {
     DateTime.utc(2021, 08, 10, 12),
     DateTime.utc(2021, 08, 11, 12)
   ];
-  final DateTime startWeekDay = DateTime.utc(2021, 08, 15, 12);
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -37,7 +36,7 @@ class _MyAppState extends State<MyApp> {
             AdvancedCalendar(
                 controller: _calendarControllerToday,
                 events: events,
-                startWeekDay: startWeekDay),
+                startWeekDay: 1),
             Theme(
               data: ThemeData.light().copyWith(
                 textTheme: ThemeData.light().textTheme.copyWith(
@@ -59,10 +58,10 @@ class _MyAppState extends State<MyApp> {
                 disabledColor: Colors.green,
               ),
               child: AdvancedCalendar(
-                controller: _calendarControllerCustom,
-                events: events,
-                weekLineHeight: 48.0,
-              ),
+                  controller: _calendarControllerCustom,
+                  events: events,
+                  weekLineHeight: 48.0,
+                  startWeekDay: 1),
             ),
           ],
         ),
