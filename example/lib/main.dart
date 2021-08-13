@@ -61,6 +61,7 @@ class _MyAppState extends State<MyApp> {
                 controller: _calendarControllerCustom,
                 events: events,
                 weekLineHeight: 48.0,
+                startWeekDay: true,
               ),
             ),
           ],

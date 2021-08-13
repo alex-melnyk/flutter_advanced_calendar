@@ -19,6 +19,7 @@ class AdvancedCalendar extends StatefulWidget {
     Key? key,
     this.controller,
     this.events,
+    this.startWeekDay = false,
     this.weekLineHeight = 32.0,
     this.preloadMonthViewAmount = 13,
     this.preloadWeekViewAmount = 21,
@@ -42,6 +43,9 @@ class AdvancedCalendar extends StatefulWidget {
 
   /// List of points for the week and mounth
   final List<DateTime>? events;
+
+  /// The first day of the week starts on Monday
+  final bool startWeekDay;
 
   @override
   _AdvancedCalendarState createState() => _AdvancedCalendarState();
@@ -95,16 +99,15 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
         _todayDate!,
         _todayDate!.month + (index - _monthPageController!.initialPage),
         widget.weeksInMonthViewAmount,
+        widget.startWeekDay,
       ),
     );
 
-    _weekRangeList =
-        _controller.value.generateWeeks(widget.preloadWeekViewAmount);
-
+    _weekRangeList = _controller.value
+        .generateWeeks(widget.preloadWeekViewAmount, widget.startWeekDay);
     _controller.addListener(() {
-      _weekRangeList =
-          _controller.value.generateWeeks(widget.preloadWeekViewAmount);
-
+      _weekRangeList = _controller.value
+          .generateWeeks(widget.preloadWeekViewAmount, widget.startWeekDay);
       _weekPageController!.jumpToPage(widget.preloadWeekViewAmount ~/ 2);
     });
   }
@@ -151,6 +154,10 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
                   style: theme.textTheme.bodyText1!.copyWith(
                     color: theme.hintColor,
                   ),
+                  startWeekDay: widget.startWeekDay,
+                  weekNames: widget.startWeekDay
+                      ? ['M', 'T', 'W', 'T', 'F', 'S', 'S']
+                      : ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
                 ),
                 AnimatedBuilder(
                   animation: _animationController,
@@ -230,13 +237,12 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
                                                           .first
                                                           .month -
                                                       2;
-                                              print(
-                                                  _monthViewCurrentPage.value);
                                             },
                                             controller: _weekPageController,
                                             itemCount: _weekRangeList.length,
                                             physics: closeMonthScroll(),
                                             itemBuilder: (context, index) {
+                                              print(_weekRangeList[index]);
                                               return WeekView(
                                                 dates: _weekRangeList[index],
                                                 selectedDate: selectedDate,
