@@ -5,7 +5,6 @@ class WeekDays extends StatelessWidget {
   const WeekDays({
     Key? key,
     this.weekNames = const <String>['S', 'M', 'T', 'W', 'T', 'F', 'S'],
-    this.startWeekDay = false,
     this.style,
   })  : assert(weekNames != null, '`weekNames` must not be null'),
         assert(weekNames.length == 7, '`weekNames` must have length 7'),
@@ -16,9 +15,6 @@ class WeekDays extends StatelessWidget {
 
   /// Text style.
   final TextStyle? style;
-
-  ///The first day of the week
-  final bool startWeekDay;
 
   @override
   Widget build(BuildContext context) {
