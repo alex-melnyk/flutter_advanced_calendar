@@ -7,10 +7,10 @@ extension DateTimeUtil on DateTime {
   }
 
   /// Calculates first week date (Sunday) from this date.
-  DateTime firstDayOfWeek(bool startWeekDay) {
+  DateTime firstDayOfWeek({DateTime? startWeekDay}) {
     final utcDate = DateTime.utc(this.year, this.month, this.day, 12);
-    return utcDate.subtract(new Duration(
-        days: startWeekDay ? (utcDate.weekday - 1) : utcDate.weekday % 7));
+    return startWeekDay ??
+        utcDate.subtract(new Duration(days: utcDate.weekday % 7));
   }
 
   /// Generates 7 dates according to this date.
@@ -26,10 +26,12 @@ extension DateTimeUtil on DateTime {
   /// Generates list of list with [DateTime]
   /// according to [date] and [weeksAmount].
   /// gives the beginning of the day of the week [startWeekDay]
-  List<List<DateTime>> generateWeeks(int weeksAmount, bool startWeekDay) {
-    final firstViewDate = this.firstDayOfWeek(startWeekDay).subtract(Duration(
-          days: (weeksAmount ~/ 2) * 7,
-        ));
+  List<List<DateTime>> generateWeeks(int weeksAmount,
+      {DateTime? startWeekDay}) {
+    final firstViewDate =
+        this.firstDayOfWeek(startWeekDay: startWeekDay).subtract(Duration(
+              days: (weeksAmount ~/ 2) * 7,
+            ));
 
     return List.generate(
       weeksAmount,
