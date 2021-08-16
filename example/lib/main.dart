@@ -13,8 +13,11 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   final _calendarControllerToday = AdvancedCalendarController.today();
   final _calendarControllerCustom =
-      AdvancedCalendarController.custom(DateTime(2021, 2, 15));
-
+      AdvancedCalendarController.custom(DateTime(2021, 2, 16));
+  final List<DateTime> events = [
+    DateTime.utc(2021, 08, 10, 12),
+    DateTime.utc(2021, 08, 11, 12)
+  ];
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -31,8 +34,9 @@ class _MyAppState extends State<MyApp> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             AdvancedCalendar(
-              controller: _calendarControllerToday,
-            ),
+                controller: _calendarControllerToday,
+                events: events,
+                startWeekDay: 1),
             Theme(
               data: ThemeData.light().copyWith(
                 textTheme: ThemeData.light().textTheme.copyWith(
@@ -54,9 +58,10 @@ class _MyAppState extends State<MyApp> {
                 disabledColor: Colors.green,
               ),
               child: AdvancedCalendar(
-                controller: _calendarControllerCustom,
-                weekLineHeight: 48.0,
-              ),
+                  controller: _calendarControllerCustom,
+                  events: events,
+                  weekLineHeight: 48.0,
+                  startWeekDay: 1),
             ),
           ],
         ),

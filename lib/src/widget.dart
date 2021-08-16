@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -17,6 +18,8 @@ class AdvancedCalendar extends StatefulWidget {
   const AdvancedCalendar({
     Key? key,
     this.controller,
+    this.startWeekDay,
+    this.events,
     this.weekLineHeight = 32.0,
     this.preloadMonthViewAmount = 13,
     this.preloadWeekViewAmount = 21,
@@ -38,6 +41,12 @@ class AdvancedCalendar extends StatefulWidget {
   /// Weeks lines amount in month view.
   final int weeksInMonthViewAmount;
 
+  /// List of points for the week and mounth
+  final List<DateTime>? events;
+
+  /// The first day of the week starts[0-6]
+  final int? startWeekDay;
+
   @override
   _AdvancedCalendarState createState() => _AdvancedCalendarState();
 }
@@ -55,6 +64,7 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
   PageController? _weekPageController;
   Offset? _captureOffset;
   DateTime? _todayDate;
+  List<String>? _weekNames;
 
   @override
   void initState() {
@@ -83,7 +93,6 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
     _animationValue = _animationController.value;
 
     _controller = widget.controller ?? AdvancedCalendarController.today();
-
     _todayDate = _controller.value;
 
     _monthRangeList = List.generate(
@@ -95,21 +104,29 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
       ),
     );
 
-    _weekRangeList =
-        _controller.value.generateWeeks(widget.preloadWeekViewAmount);
-
+    _weekRangeList = _controller.value.generateWeeks(
+        widget.preloadWeekViewAmount,
+        startWeekDay: widget.startWeekDay);
     _controller.addListener(() {
-      _weekRangeList =
-          _controller.value.generateWeeks(widget.preloadWeekViewAmount);
-
+      _weekRangeList = _controller.value.generateWeeks(
+        widget.preloadWeekViewAmount,
+      );
       _weekPageController!.jumpToPage(widget.preloadWeekViewAmount ~/ 2);
     });
+    if (widget.startWeekDay != null && widget.startWeekDay! < 7) {
+      final time = _controller.value.subtract(
+          Duration(days: _controller.value.weekday - widget.startWeekDay!));
+      final list = List<DateTime>.generate(
+          8, (index) => time.add(Duration(days: index * 1))).toList();
+      _weekNames = List<String>.generate(7, (index) {
+        return DateFormat("EEEE").format(list[index]).split('').first;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-
     return Material(
       color: Colors.transparent,
       child: DefaultTextStyle(
@@ -148,6 +165,9 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
                   style: theme.textTheme.bodyText1!.copyWith(
                     color: theme.hintColor,
                   ),
+                  weekNames: _weekNames != null
+                      ? _weekNames!
+                      : const <String>['S', 'M', 'T', 'W', 'T', 'F', 'S'],
                 ),
                 AnimatedBuilder(
                   animation: _animationController,
@@ -157,7 +177,6 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
                       end:
                           widget.weekLineHeight * widget.weeksInMonthViewAmount,
                     ).transform(_animationController.value);
-
                     return SizedBox(
                       height: height,
                       child: ValueListenableBuilder<DateTime>(
@@ -191,6 +210,7 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
                                         weeksAmount:
                                             widget.weeksInMonthViewAmount,
                                         onChanged: _handleDateChanged,
+                                        events: widget.events,
                                       );
                                     },
                                   ),
@@ -207,7 +227,6 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
                                           (widget.weeksInMonthViewAmount - 1) *
                                           2 -
                                       1.0;
-
                                   return Align(
                                     alignment: Alignment(0.0, offset),
                                     child: IgnorePointer(
@@ -221,8 +240,16 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
                                         child: SizedBox(
                                           height: widget.weekLineHeight,
                                           child: PageView.builder(
+                                            onPageChanged: (indexPage) {
+                                              _monthViewCurrentPage.value =
+                                                  _weekRangeList[indexPage]
+                                                          .first
+                                                          .month -
+                                                      2;
+                                            },
                                             controller: _weekPageController,
                                             itemCount: _weekRangeList.length,
+                                            physics: closeMonthScroll(),
                                             itemBuilder: (context, index) {
                                               return WeekView(
                                                 dates: _weekRangeList[index],
@@ -231,6 +258,7 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
                                                     widget.weekLineHeight,
                                                 onChanged:
                                                     _handleWeekDateChanged,
+                                                events: widget.events,
                                               );
                                             },
                                           ),
@@ -288,6 +316,17 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
     _controller.value = DateTime.now().toZeroTime();
 
     _monthPageController!.jumpToPage(widget.preloadMonthViewAmount ~/ 2);
+  }
+
+  ScrollPhysics closeMonthScroll() {
+    if ((_monthViewCurrentPage.value ==
+            (widget.preloadMonthViewAmount ~/ 2) + 3 ||
+        _monthViewCurrentPage.value ==
+            (widget.preloadMonthViewAmount ~/ 2) - 3)) {
+      return NeverScrollableScrollPhysics();
+    } else {
+      return AlwaysScrollableScrollPhysics();
+    }
   }
 
   @override

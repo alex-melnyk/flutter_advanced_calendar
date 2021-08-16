@@ -23,29 +23,11 @@ class WeekDays extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          DateBox(
-            child: Text('S'),
-          ),
-          DateBox(
-            child: Text('M'),
-          ),
-          DateBox(
-            child: Text('T'),
-          ),
-          DateBox(
-            child: Text('W'),
-          ),
-          DateBox(
-            child: Text('T'),
-          ),
-          DateBox(
-            child: Text('F'),
-          ),
-          DateBox(
-            child: Text('S'),
-          ),
-        ],
+        children: List.generate(weekNames.length, (index) {
+          return DateBox(
+            child: Text(weekNames[index]),
+          );
+        }),
       ),
     );
   }
