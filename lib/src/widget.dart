@@ -86,7 +86,7 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
 
     _animationController = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 300),
       value: 0,
     );
 
@@ -137,14 +137,13 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
           },
           onVerticalDragUpdate: (details) {
             final moveOffset = details.globalPosition;
-
             final diffY = moveOffset.dy - _captureOffset!.dy;
 
             _animationController.value =
                 _animationValue + diffY / (widget.weekLineHeight * 5);
           },
           onVerticalDragEnd: (details) => _handleFinishDrag(),
-          onVerticalDragCancel: () => _handleFinishDrag(),
+          onVerticalDragCancel: _handleFinishDrag,
           child: Container(
             color: Colors.transparent,
             child: Column(
@@ -199,8 +198,8 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
                                     },
                                     controller: _monthPageController,
                                     physics: _animationController.value == 1.0
-                                        ? AlwaysScrollableScrollPhysics()
-                                        : NeverScrollableScrollPhysics(),
+                                        ? const AlwaysScrollableScrollPhysics()
+                                        : const NeverScrollableScrollPhysics(),
                                     itemCount: _monthRangeList.length,
                                     itemBuilder: (_, pageIndex) {
                                       return MonthView(
@@ -324,9 +323,9 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
             (widget.preloadMonthViewAmount ~/ 2) + 3 ||
         _monthViewCurrentPage.value ==
             (widget.preloadMonthViewAmount ~/ 2) - 3)) {
-      return NeverScrollableScrollPhysics();
+      return const NeverScrollableScrollPhysics();
     } else {
-      return AlwaysScrollableScrollPhysics();
+      return const AlwaysScrollableScrollPhysics();
     }
   }
 
