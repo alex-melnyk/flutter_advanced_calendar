@@ -34,9 +34,9 @@ class _MyAppState extends State<MyApp> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             AdvancedCalendar(
-              controller: _calendarControllerToday,
-              events: events,
-            ),
+                controller: _calendarControllerToday,
+                events: events,
+                startWeekDay: 1),
             Theme(
               data: ThemeData.light().copyWith(
                 textTheme: ThemeData.light().textTheme.copyWith(
@@ -58,10 +58,10 @@ class _MyAppState extends State<MyApp> {
                 disabledColor: Colors.green,
               ),
               child: AdvancedCalendar(
-                controller: _calendarControllerCustom,
-                events: events,
-                weekLineHeight: 48.0,
-              ),
+                  controller: _calendarControllerCustom,
+                  events: events,
+                  weekLineHeight: 48.0,
+                  startWeekDay: 1),
             ),
           ],
         ),
