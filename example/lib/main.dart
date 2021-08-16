@@ -36,19 +36,19 @@ class _MyAppState extends State<MyApp> {
             Theme(
               data: ThemeData.light().copyWith(
                 textTheme: ThemeData.light().textTheme.copyWith(
-                  subtitle1: ThemeData.light().textTheme.subtitle1.copyWith(
-                    fontSize: 16,
-                    color: theme.accentColor,
-                  ),
-                  bodyText1: ThemeData.light().textTheme.bodyText1.copyWith(
-                    fontSize: 14,
-                    color: Colors.black54,
-                  ),
-                  bodyText2: ThemeData.light().textTheme.bodyText1.copyWith(
-                    fontSize: 12,
-                    color: Colors.black87,
-                  ),
-                ),
+                      subtitle1: ThemeData.light().textTheme.subtitle1.copyWith(
+                            fontSize: 16,
+                            color: theme.accentColor,
+                          ),
+                      bodyText1: ThemeData.light().textTheme.bodyText1.copyWith(
+                            fontSize: 14,
+                            color: Colors.black54,
+                          ),
+                      bodyText2: ThemeData.light().textTheme.bodyText1.copyWith(
+                            fontSize: 12,
+                            color: Colors.black87,
+                          ),
+                    ),
                 primaryColor: Colors.red,
                 highlightColor: Colors.yellow,
                 disabledColor: Colors.green,

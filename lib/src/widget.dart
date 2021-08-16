@@ -120,7 +120,6 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
           },
           onVerticalDragUpdate: (details) {
             final moveOffset = details.globalPosition;
-
             final diffY = moveOffset.dy - _captureOffset!.dy;
 
             _animationController.value =
@@ -228,7 +227,8 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
                                               return WeekView(
                                                 dates: _weekRangeList[index],
                                                 selectedDate: selectedDate,
-                                                lineHeight: widget.weekLineHeight,
+                                                lineHeight:
+                                                    widget.weekLineHeight,
                                                 onChanged:
                                                     _handleWeekDateChanged,
                                               );
