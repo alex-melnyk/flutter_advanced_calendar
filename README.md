@@ -66,3 +66,4 @@ Theme(
 |`preloadWeekViewAmount`|Amount of weeks in week view to preload|*int*|21|
 |`weeksInMonthViewAmount`|Weeks lines amount in month view|*int*|6|
 |`events`|List of DateTime to indicate date|*List<DateTime>*|[]|
+|`startWeekDay`|Indicated for the beginning of the first day on Sunday|*int*|0|
