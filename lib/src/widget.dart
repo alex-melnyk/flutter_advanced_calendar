@@ -101,7 +101,6 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
         _todayDate!,
         _todayDate!.month + (index - _monthPageController!.initialPage),
         widget.weeksInMonthViewAmount,
-        // startWeekDay: widget.startWeekDay
       ),
     );
 
@@ -167,11 +166,9 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
                   style: theme.textTheme.bodyText1!.copyWith(
                     color: theme.hintColor,
                   ),
-                  weekNames:
-                      // (widget.startWeekDay != null && widget.startWeekDay! < 7)
-                      _weekNames != null
-                          ? _weekNames!
-                          : ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
+                  weekNames: _weekNames != null
+                      ? _weekNames!
+                      : const <String>['S', 'M', 'T', 'W', 'T', 'F', 'S'],
                 ),
                 AnimatedBuilder(
                   animation: _animationController,
@@ -332,13 +329,6 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
       return AlwaysScrollableScrollPhysics();
     }
   }
-
-  // List<String> generateWeekNames(DateTime date) {
-  //   final list = List<DateTime>.generate(
-  //       8, (index) => date.add(Duration(days: index * 1)));
-  //   return List<String>.generate(
-  //       7, (index) => (DateFormat("EEEE").format(list[index]).split('').first));
-  // }
 
   @override
   void dispose() {
