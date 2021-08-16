@@ -40,7 +40,7 @@ class DateBox extends StatelessWidget {
         borderRadius: borderRadius,
         highlightShape: BoxShape.rectangle,
         child: AnimatedContainer(
-          duration: Duration(milliseconds: 150),
+          duration: const Duration(milliseconds: 150),
           width: width,
           height: height,
           alignment: Alignment.center,

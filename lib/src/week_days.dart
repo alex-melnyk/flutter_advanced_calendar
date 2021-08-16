@@ -6,8 +6,7 @@ class WeekDays extends StatelessWidget {
     Key? key,
     this.weekNames = const <String>['S', 'M', 'T', 'W', 'T', 'F', 'S'],
     this.style,
-  })  : assert(weekNames != null, '`weekNames` must not be null'),
-        assert(weekNames.length == 7, '`weekNames` must have length 7'),
+  })  : assert(weekNames.length == 7, '`weekNames` must have length 7'),
         super(key: key);
 
   /// Week day names.
