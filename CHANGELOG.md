@@ -1,3 +1,7 @@
+## 1.1.1
+
+* Week swiping fixed
+* Tap on Today for week view fixed
 ## 1.1.0
 
 * Dots indicator feature implemented.
