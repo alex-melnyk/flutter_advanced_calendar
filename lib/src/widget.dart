@@ -320,6 +320,7 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
     _controller.value = DateTime.now().toZeroTime();
 
     _monthPageController!.jumpToPage(widget.preloadMonthViewAmount ~/ 2);
+    _weekPageController!.jumpToPage(widget.preloadWeekViewAmount ~/ 2);
   }
 
   ScrollPhysics closeMonthScroll() {
