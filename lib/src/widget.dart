@@ -242,10 +242,14 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
                                           child: PageView.builder(
                                             onPageChanged: (indexPage) {
                                               _monthViewCurrentPage.value =
-                                                  _weekRangeList[indexPage]
-                                                          .first
-                                                          .month -
-                                                      2;
+                                                  _monthRangeList.indexWhere(
+                                                      (index) =>
+                                                          index
+                                                              .firstDay.month ==
+                                                          _weekRangeList[
+                                                                  indexPage]
+                                                              .first
+                                                              .month);
                                             },
                                             controller: _weekPageController,
                                             itemCount: _weekRangeList.length,
