@@ -1,13 +1,13 @@
 name: flutter_advanced_calendar
 description: An advanced calendar provides a rich API for widget customization that opens a new look and feel in your app.
-version: 1.1.0
+version: 1.1.1
 homepage: https://github.com/alex-melnyk/flutter_advanced_calendar
 repository: https://github.com/alex-melnyk/flutter_advanced_calendar
 issue_tracker: https://github.com/alex-melnyk/flutter_advanced_calendar/issues
 documentation: https://github.com/alex-melnyk/flutter_advanced_calendar/blob/master/README.md
 
 environment:
-  sdk: '>=2.12.0 <3.0.0'
+  sdk: ">=2.12.0 <3.0.0"
   flutter: ">=1.22.0"
 
 dependencies:
@@ -16,6 +16,5 @@ dependencies:
 
   intl: ^0.17.0
   flutter_lints: ^1.0.4
-
 
 flutter:
