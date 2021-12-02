@@ -22,7 +22,7 @@ class WeekView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Container(
+    return SizedBox(
       height: lineHeight,
       child: Row(
         mainAxisSize: MainAxisSize.max,
