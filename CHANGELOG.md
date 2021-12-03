@@ -1,4 +1,4 @@
-## 1.1.1
+## 1.1.2
 
 * Fix events comparison
 
