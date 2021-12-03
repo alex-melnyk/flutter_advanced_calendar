@@ -24,6 +24,8 @@ class AdvancedCalendar extends StatefulWidget {
     this.preloadMonthViewAmount = 13,
     this.preloadWeekViewAmount = 21,
     this.weeksInMonthViewAmount = 6,
+    this.todayStyle,
+    this.dateStyle,
   }) : super(key: key);
 
   /// Calendar selection date controller.
@@ -46,6 +48,12 @@ class AdvancedCalendar extends StatefulWidget {
 
   /// The first day of the week starts[0-6]
   final int? startWeekDay;
+
+  /// Style of date
+  final TextStyle? dateStyle;
+
+  /// Style of Today button
+  final TextStyle? todayStyle;
 
   @override
   _AdvancedCalendarState createState() => _AdvancedCalendarState();
@@ -158,6 +166,8 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
                       monthDate:
                           _monthRangeList[_monthViewCurrentPage.value].firstDay,
                       onPressed: _handleTodayPressed,
+                      dateStyle: widget.dateStyle,
+                      todayStyle: widget.todayStyle,
                     );
                   },
                 ),
