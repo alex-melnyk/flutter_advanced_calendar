@@ -1,6 +1,7 @@
 ## 1.1.2
 
 * Fix events comparison
+* Add ability to style text
 
 ## 1.1.1
 
