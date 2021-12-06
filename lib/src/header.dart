@@ -11,12 +11,16 @@ class Header extends StatelessWidget {
       bottom: 4.0,
     ),
     this.onPressed,
+    this.dateStyle,
+    this.todayStyle,
   }) : super(key: key);
 
   static final _dateFormatter = DateFormat().add_yMMMM();
   final DateTime monthDate;
   final EdgeInsetsGeometry margin;
   final VoidCallback? onPressed;
+  final TextStyle? dateStyle;
+  final TextStyle? todayStyle;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +33,7 @@ class Header extends StatelessWidget {
         children: [
           Text(
             _dateFormatter.format(monthDate),
-            style: theme.textTheme.subtitle1!,
+            style: dateStyle ?? theme.textTheme.subtitle1!,
           ),
           InkWell(
             onTap: onPressed,
@@ -43,7 +47,7 @@ class Header extends StatelessWidget {
               ),
               child: Text(
                 'Today',
-                style: theme.textTheme.subtitle1!,
+                style: todayStyle ?? theme.textTheme.subtitle1!,
               ),
             ),
           ),

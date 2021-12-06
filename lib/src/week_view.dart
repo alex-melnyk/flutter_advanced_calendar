@@ -60,7 +60,7 @@ class WeekView extends StatelessWidget {
                 Column(
                   children: List<Widget>.generate(
                       events != null ? events!.length : 0,
-                      (index) => events![index] == date
+                      (index) => events![index].isSameDate(date)
                           ? Container(
                               height: 6,
                               width: 6,
