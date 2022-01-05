@@ -8,7 +8,7 @@ class DateBox extends StatelessWidget {
     this.color,
     this.width = 24.0,
     this.height = 24.0,
-    this.borderRadius = const BorderRadius.all(Radius.circular(8.0)),
+    this.borderRadius = const BorderRadius.all(Radius.circular(12.0)),
     this.onPressed,
   }) : super(key: key);
 

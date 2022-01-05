@@ -10,6 +10,8 @@ class MonthView extends StatelessWidget {
     required this.weeksAmount,
     this.onChanged,
     this.events,
+    this.selectedDayColor,
+    this.todayColor,
   }) : super(key: key);
 
   final ViewRange monthView;
@@ -19,6 +21,8 @@ class MonthView extends StatelessWidget {
   final int weeksAmount;
   final ValueChanged<DateTime>? onChanged;
   final List<DateTime>? events;
+  final Color? selectedDayColor;
+  final Color? todayColor;
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +47,8 @@ class MonthView extends StatelessWidget {
               lineHeight: weekLineHeight,
               onChanged: onChanged,
               events: events,
+              selectedDayColor: selectedDayColor,
+              todayColor: todayColor,
             );
           },
           growable: false,
