@@ -1,3 +1,7 @@
+## 1.1.3
+
+* Add `Function(DateTime)? onHorizontalDrag` parameter. It passes back viewable month and allows to load events for this month.
+
 ## 1.1.2
 
 * Fix events comparison

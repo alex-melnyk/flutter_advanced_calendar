@@ -26,10 +26,14 @@ class AdvancedCalendar extends StatefulWidget {
     this.weeksInMonthViewAmount = 6,
     this.todayStyle,
     this.dateStyle,
+    this.onHorizontalDrag,
   }) : super(key: key);
 
   /// Calendar selection date controller.
   final AdvancedCalendarController? controller;
+
+  /// Executes on horizontal calendar swipe. Allows to load additional dates.
+  final Function(DateTime)? onHorizontalDrag;
 
   /// Height of week line.
   final double weekLineHeight;
@@ -204,6 +208,11 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
                                   ).evaluate(_animationController),
                                   child: PageView.builder(
                                     onPageChanged: (pageIndex) {
+                                      if (widget.onHorizontalDrag != null) {
+                                        widget.onHorizontalDrag!(
+                                          _monthRangeList[pageIndex].firstDay,
+                                        );
+                                      }
                                       _monthViewCurrentPage.value = pageIndex;
                                     },
                                     controller: _monthPageController,
@@ -251,15 +260,22 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
                                           height: widget.weekLineHeight,
                                           child: PageView.builder(
                                             onPageChanged: (indexPage) {
+                                              final pageIndex = _monthRangeList
+                                                  .indexWhere((index) =>
+                                                      index.firstDay.month ==
+                                                      _weekRangeList[indexPage]
+                                                          .first
+                                                          .month);
+
+                                              if (widget.onHorizontalDrag !=
+                                                  null) {
+                                                widget.onHorizontalDrag!(
+                                                  _monthRangeList[pageIndex]
+                                                      .firstDay,
+                                                );
+                                              }
                                               _monthViewCurrentPage.value =
-                                                  _monthRangeList.indexWhere(
-                                                      (index) =>
-                                                          index
-                                                              .firstDay.month ==
-                                                          _weekRangeList[
-                                                                  indexPage]
-                                                              .first
-                                                              .month);
+                                                  pageIndex;
                                             },
                                             controller: _weekPageController,
                                             itemCount: _weekRangeList.length,
