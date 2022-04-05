@@ -8,7 +8,6 @@ documentation: https://github.com/alex-melnyk/flutter_advanced_calendar/blob/mas
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
-  flutter: ">=1.22.0"
 
 dependencies:
   flutter:
