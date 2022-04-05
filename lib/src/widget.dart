@@ -218,7 +218,7 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
                                   child: PageView.builder(
                                     onPageChanged: (pageIndex) {
                                       if (widget.onHorizontalDrag != null) {
-                                        !widget.onHorizontalDrag!(
+                                        widget.onHorizontalDrag!(
                                           _monthRangeList[pageIndex].firstDay,
                                         );
                                       }
@@ -281,7 +281,7 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
 
                                               if (widget.onHorizontalDrag !=
                                                   null) {
-                                                !widget.onHorizontalDrag!(
+                                                widget.onHorizontalDrag!(
                                                   _monthRangeList[pageIndex]
                                                       .firstDay,
                                                 );
