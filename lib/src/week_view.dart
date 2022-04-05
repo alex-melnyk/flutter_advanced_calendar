@@ -9,6 +9,7 @@ class WeekView extends StatelessWidget {
     this.highlightMonth,
     this.onChanged,
     this.events,
+    required this.innerDot,
   }) : super(key: key);
 
   final DateTime todayDate = DateTime.now().toZeroTime();
@@ -18,6 +19,7 @@ class WeekView extends StatelessWidget {
   final DateTime selectedDate;
   final ValueChanged<DateTime>? onChanged;
   final List<DateTime>? events;
+  final bool innerDot;
 
   @override
   Widget build(BuildContext context) {
@@ -34,18 +36,22 @@ class WeekView extends StatelessWidget {
             final date = dates[dayIndex];
             final isToday = date.isAtSameMomentAs(todayDate);
             final isSelected = date.isAtSameMomentAs(selectedDate);
-            final isHighlight =
-                highlightMonth == null ? true : date.month == highlightMonth;
+            final isHighlight = highlightMonth == date.month;
+
+            final containsToday =
+                events!.indexWhere((element) => element.isSameDate(date));
+
             return Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 DateBox(
+                  width: innerDot ? 32 : 24,
+                  height: innerDot ? 32 : 24,
+                  showDot: innerDot,
                   onPressed: onChanged != null ? () => onChanged!(date) : null,
-                  color: isSelected
-                      ? theme.primaryColor
-                      : isToday
-                          ? theme.highlightColor
-                          : null,
+                  isSelected: isSelected,
+                  isToday: isToday,
+                  hasEvent: containsToday != -1,
                   child: Text(
                     '${date.day}',
                     style: TextStyle(
@@ -57,18 +63,22 @@ class WeekView extends StatelessWidget {
                     ),
                   ),
                 ),
-                Column(
-                  children: List<Widget>.generate(
+                if (!innerDot)
+                  Column(
+                    children: List<Widget>.generate(
                       events != null ? events!.length : 0,
                       (index) => events![index].isSameDate(date)
                           ? Container(
                               height: 6,
                               width: 6,
                               decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(50),
-                                  color: Theme.of(context).primaryColor))
-                          : const SizedBox()),
-                )
+                                borderRadius: BorderRadius.circular(50),
+                                color: theme.primaryColor,
+                              ),
+                            )
+                          : const SizedBox(),
+                    ),
+                  )
               ],
             );
           },

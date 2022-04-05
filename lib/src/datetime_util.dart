@@ -29,17 +29,20 @@ extension DateTimeUtil on DateTime {
   /// according to [date] and [weeksAmount].
   /// gives the beginning of the day of the week [startWeekDay]
   List<List<DateTime>> generateWeeks(int weeksAmount, {int? startWeekDay}) {
-    final firstViewDate =
-        firstDayOfWeek(startWeekDay: startWeekDay).subtract(Duration(
-      days: (weeksAmount ~/ 2) * 7,
-    ));
+    final firstViewDate = firstDayOfWeek(startWeekDay: startWeekDay).subtract(
+      Duration(
+        days: (weeksAmount ~/ 2) * 7,
+      ),
+    );
 
     return List.generate(
       weeksAmount,
       (weekIndex) {
-        final firstDateOfNextWeek = firstViewDate.add(Duration(
-          days: weekIndex * 7,
-        ));
+        final firstDateOfNextWeek = firstViewDate.add(
+          Duration(
+            days: weekIndex * 7,
+          ),
+        );
 
         return firstDateOfNextWeek.weekDates();
       },

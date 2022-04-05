@@ -67,3 +67,5 @@ Theme(
 |`weeksInMonthViewAmount`|Weeks lines amount in month view|*int*|6|
 |`events`|List of DateTime to indicate date|*List<DateTime>*|[]|
 |`startWeekDay`|Indicated for the beginning of the first day on Sunday|*int*|0|
+|`innerDot`|Show alternative event design in date box|*bool*|false|
+
