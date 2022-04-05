@@ -1,3 +1,7 @@
+## 1.1.4
+
+* Dot indicator on specified dates added.
+
 ## 1.1.3
 
 * Add `Function(DateTime)? onHorizontalDrag` parameter. It passes back viewable month and allows to load events for this month.
