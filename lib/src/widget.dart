@@ -113,15 +113,18 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
         _todayDate!,
         _todayDate!.month + (index - _monthPageController!.initialPage),
         widget.weeksInMonthViewAmount,
+        startWeekDay: widget.startWeekDay,
       ),
     );
 
     _weekRangeList = _controller.value.generateWeeks(
-        widget.preloadWeekViewAmount,
-        startWeekDay: widget.startWeekDay);
+      widget.preloadWeekViewAmount,
+      startWeekDay: widget.startWeekDay,
+    );
     _controller.addListener(() {
       _weekRangeList = _controller.value.generateWeeks(
         widget.preloadWeekViewAmount,
+        startWeekDay: widget.startWeekDay,
       );
       _weekPageController!.jumpToPage(widget.preloadWeekViewAmount ~/ 2);
     });
@@ -239,9 +242,9 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
                                 valueListenable: _monthViewCurrentPage,
                                 builder: (_, pageIndex, __) {
                                   final index = selectedDate.findWeekIndex(
-                                      _monthRangeList[
-                                              _monthViewCurrentPage.value]
-                                          .dates);
+                                    _monthRangeList[_monthViewCurrentPage.value]
+                                        .dates,
+                                  );
                                   final offset = index /
                                           (widget.weeksInMonthViewAmount - 1) *
                                           2 -
