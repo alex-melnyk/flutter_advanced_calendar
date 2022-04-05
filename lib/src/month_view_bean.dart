@@ -12,8 +12,12 @@ class ViewRange {
   /// Generates [ViewRange] instance based on [date],
   /// number of [month] and [weeksAmount].
   /// gives the beginning of the day of the week [startWeekDay]
-  factory ViewRange.generateDates(DateTime date, int month, int weeksAmount,
-      {int? startWeekDay}) {
+  factory ViewRange.generateDates(
+    DateTime date,
+    int month,
+    int weeksAmount, {
+    int? startWeekDay,
+  }) {
     final firstMonthDate = DateTime.utc(date.year, month, 1);
     final firstViewDate =
         firstMonthDate.firstDayOfWeek(startWeekDay: startWeekDay);

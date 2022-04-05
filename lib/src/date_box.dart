@@ -10,6 +10,10 @@ class DateBox extends StatelessWidget {
     this.height = 24.0,
     this.borderRadius = const BorderRadius.all(Radius.circular(8.0)),
     this.onPressed,
+    this.showDot = false,
+    this.isSelected = false,
+    this.isToday = false,
+    this.hasEvent = false,
   }) : super(key: key);
 
   /// Child widget.
@@ -30,8 +34,21 @@ class DateBox extends StatelessWidget {
   /// Pressed callback function.
   final VoidCallback? onPressed;
 
+  /// Show DateBox event in container.
+  final bool showDot;
+
+  /// DateBox is today.
+  final bool isToday;
+
+  /// DateBox selection.
+  final bool isSelected;
+
+  /// Show event in DateBox.
+  final bool hasEvent;
+
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return UnconstrainedBox(
       alignment: Alignment.center,
       child: InkResponse(
@@ -45,10 +62,39 @@ class DateBox extends StatelessWidget {
           height: height,
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            color: color,
+            color: isSelected
+                ? theme.primaryColor
+                : isToday
+                    ? theme.highlightColor
+                    : null,
             borderRadius: borderRadius,
           ),
-          child: child,
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              Align(
+                alignment: Alignment.center,
+                child: child,
+              ),
+              if (showDot && hasEvent)
+                Positioned.fill(
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
+                      margin: const EdgeInsets.all(2.0),
+                      height: 4,
+                      width: 4,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: isSelected
+                            ? theme.colorScheme.onPrimary
+                            : theme.colorScheme.secondary,
+                      ),
+                    ),
+                  ),
+                ),
+            ],
+          ),
         ),
       ),
     );

@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -27,6 +26,7 @@ class AdvancedCalendar extends StatefulWidget {
     this.todayStyle,
     this.dateStyle,
     this.onHorizontalDrag,
+    this.innerDot = false,
   }) : super(key: key);
 
   /// Calendar selection date controller.
@@ -58,6 +58,9 @@ class AdvancedCalendar extends StatefulWidget {
 
   /// Style of Today button
   final TextStyle? todayStyle;
+
+  /// Show DateBox event in container.
+  final bool innerDot;
 
   @override
   _AdvancedCalendarState createState() => _AdvancedCalendarState();
@@ -130,9 +133,12 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
     });
     if (widget.startWeekDay != null && widget.startWeekDay! < 7) {
       final time = _controller.value.subtract(
-          Duration(days: _controller.value.weekday - widget.startWeekDay!));
+        Duration(days: _controller.value.weekday - widget.startWeekDay!),
+      );
       final list = List<DateTime>.generate(
-          8, (index) => time.add(Duration(days: index * 1))).toList();
+        8,
+        (index) => time.add(Duration(days: index * 1)),
+      ).toList();
       _weekNames = List<String>.generate(7, (index) {
         return DateFormat("EEEE").format(list[index]).split('').first;
       });
@@ -212,7 +218,7 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
                                   child: PageView.builder(
                                     onPageChanged: (pageIndex) {
                                       if (widget.onHorizontalDrag != null) {
-                                        widget.onHorizontalDrag!(
+                                        !widget.onHorizontalDrag!(
                                           _monthRangeList[pageIndex].firstDay,
                                         );
                                       }
@@ -225,6 +231,7 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
                                     itemCount: _monthRangeList.length,
                                     itemBuilder: (_, pageIndex) {
                                       return MonthView(
+                                        innerDot: widget.innerDot,
                                         monthView: _monthRangeList[pageIndex],
                                         todayDate: _todayDate,
                                         selectedDate: selectedDate,
@@ -263,16 +270,18 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
                                           height: widget.weekLineHeight,
                                           child: PageView.builder(
                                             onPageChanged: (indexPage) {
-                                              final pageIndex = _monthRangeList
-                                                  .indexWhere((index) =>
-                                                      index.firstDay.month ==
-                                                      _weekRangeList[indexPage]
-                                                          .first
-                                                          .month);
+                                              final pageIndex =
+                                                  _monthRangeList.indexWhere(
+                                                (index) =>
+                                                    index.firstDay.month ==
+                                                    _weekRangeList[indexPage]
+                                                        .first
+                                                        .month,
+                                              );
 
                                               if (widget.onHorizontalDrag !=
                                                   null) {
-                                                widget.onHorizontalDrag!(
+                                                !widget.onHorizontalDrag!(
                                                   _monthRangeList[pageIndex]
                                                       .firstDay,
                                                 );
@@ -285,6 +294,7 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
                                             physics: closeMonthScroll(),
                                             itemBuilder: (context, index) {
                                               return WeekView(
+                                                innerDot: widget.innerDot,
                                                 dates: _weekRangeList[index],
                                                 selectedDate: selectedDate,
                                                 lineHeight:
