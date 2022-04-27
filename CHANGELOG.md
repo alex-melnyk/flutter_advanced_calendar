@@ -1,3 +1,7 @@
+## 1.1.5
+
+* Fix dates color for week view.
+
 ## 1.1.4
 
 * Dot indicator on specified dates added.
