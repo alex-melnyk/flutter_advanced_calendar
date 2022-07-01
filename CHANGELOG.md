@@ -1,3 +1,7 @@
+## 1.2.0
+
+* Update flutter_lints to 2.0.1
+
 ## 1.1.5
 
 * Fix dates color for week view.

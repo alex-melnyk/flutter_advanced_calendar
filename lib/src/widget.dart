@@ -47,7 +47,7 @@ class AdvancedCalendar extends StatefulWidget {
   /// Weeks lines amount in month view.
   final int weeksInMonthViewAmount;
 
-  /// List of points for the week and mounth
+  /// List of points for the week and month
   final List<DateTime>? events;
 
   /// The first day of the week starts[0-6]
