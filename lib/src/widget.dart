@@ -14,20 +14,26 @@ part 'week_view.dart';
 
 /// Advanced Calendar widget.
 class AdvancedCalendar extends StatefulWidget {
-  const AdvancedCalendar({
-    Key? key,
-    this.controller,
-    this.startWeekDay,
-    this.events,
-    this.weekLineHeight = 32.0,
-    this.preloadMonthViewAmount = 13,
-    this.preloadWeekViewAmount = 21,
-    this.weeksInMonthViewAmount = 6,
-    this.todayStyle,
-    this.dateStyle,
-    this.onHorizontalDrag,
-    this.innerDot = false,
-  }) : super(key: key);
+  const AdvancedCalendar(
+      {Key? key,
+      this.controller,
+      this.startWeekDay,
+      this.events,
+      this.weekLineHeight = 32.0,
+      this.preloadMonthViewAmount = 13,
+      this.preloadWeekViewAmount = 21,
+      this.weeksInMonthViewAmount = 6,
+      this.todayStyle,
+      this.dateStyle,
+      this.onHorizontalDrag,
+      this.innerDot = false,
+      this.localeID = "en",
+      this.todayString = 'Today'})
+      : super(key: key);
+
+  /// Settings to manage language [default : English]
+  final String localeID;
+  final String todayString;
 
   /// Calendar selection date controller.
   final AdvancedCalendarController? controller;
@@ -140,7 +146,11 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
         (index) => time.add(Duration(days: index * 1)),
       ).toList();
       _weekNames = List<String>.generate(7, (index) {
-        return DateFormat("EEEE").format(list[index]).split('').first;
+        return DateFormat.EEEE(widget.localeID)
+            .format(list[index])
+            .split('')
+            .first
+            .toUpperCase();
       });
     }
   }
@@ -181,6 +191,8 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
                       onPressed: _handleTodayPressed,
                       dateStyle: widget.dateStyle,
                       todayStyle: widget.todayStyle,
+                      localeID: widget.localeID,
+                      todayString: widget.todayString,
                     );
                   },
                 ),

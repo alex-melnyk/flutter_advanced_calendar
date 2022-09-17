@@ -1,29 +1,33 @@
 part of 'widget.dart';
 
 class Header extends StatelessWidget {
-  const Header({
-    Key? key,
-    required this.monthDate,
-    this.margin = const EdgeInsets.only(
-      left: 16.0,
-      right: 8.0,
-      top: 4.0,
-      bottom: 4.0,
-    ),
-    this.onPressed,
-    this.dateStyle,
-    this.todayStyle,
-  }) : super(key: key);
+  const Header(
+      {Key? key,
+      required this.monthDate,
+      this.margin = const EdgeInsets.only(
+        left: 16.0,
+        right: 8.0,
+        top: 4.0,
+        bottom: 4.0,
+      ),
+      this.onPressed,
+      this.dateStyle,
+      this.todayStyle,
+      this.todayString = 'Today',
+      this.localeID = "en"})
+      : super(key: key);
 
-  static final _dateFormatter = DateFormat().add_yMMMM();
+  final String localeID;
   final DateTime monthDate;
   final EdgeInsetsGeometry margin;
   final VoidCallback? onPressed;
   final TextStyle? dateStyle;
   final TextStyle? todayStyle;
+  final String todayString;
 
   @override
   Widget build(BuildContext context) {
+    final dateFormatter = DateFormat.yMMMM(localeID);
     final theme = Theme.of(context);
 
     return Container(
@@ -32,7 +36,7 @@ class Header extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            _dateFormatter.format(monthDate),
+            dateFormatter.format(monthDate),
             style: dateStyle ?? theme.textTheme.subtitle1!,
           ),
           InkWell(
@@ -46,7 +50,7 @@ class Header extends StatelessWidget {
                 vertical: 4.0,
               ),
               child: Text(
-                'Today',
+                todayString,
                 style: todayStyle ?? theme.textTheme.subtitle1!,
               ),
             ),
