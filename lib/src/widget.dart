@@ -27,7 +27,14 @@ class AdvancedCalendar extends StatefulWidget {
     this.dateStyle,
     this.onHorizontalDrag,
     this.innerDot = false,
-  }) : super(key: key);
+    this.keepLineSize = false,
+  })  : assert(
+          keepLineSize && innerDot ||
+              innerDot && !keepLineSize ||
+              !innerDot && !keepLineSize,
+          'keepLineSize should be used only when innerDot is true',
+        ),
+        super(key: key);
 
   /// Calendar selection date controller.
   final AdvancedCalendarController? controller;
@@ -53,7 +60,7 @@ class AdvancedCalendar extends StatefulWidget {
   /// The first day of the week starts[0-6]
   final int? startWeekDay;
 
-  /// Style of date
+  /// Style of headers date
   final TextStyle? dateStyle;
 
   /// Style of Today button
@@ -61,6 +68,10 @@ class AdvancedCalendar extends StatefulWidget {
 
   /// Show DateBox event in container.
   final bool innerDot;
+
+  /// Keeps consistent line size for dates
+  /// Can't be used without innerDot
+  final bool keepLineSize;
 
   @override
   _AdvancedCalendarState createState() => _AdvancedCalendarState();
@@ -188,6 +199,7 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
                   style: theme.textTheme.bodyText1!.copyWith(
                     color: theme.hintColor,
                   ),
+                  keepLineSize: widget.keepLineSize,
                   weekNames: _weekNames != null
                       ? _weekNames!
                       : const <String>['S', 'M', 'T', 'W', 'T', 'F', 'S'],
@@ -240,6 +252,7 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
                                             widget.weeksInMonthViewAmount,
                                         onChanged: _handleDateChanged,
                                         events: widget.events,
+                                        keepLineSize: widget.keepLineSize,
                                       );
                                     },
                                   ),
@@ -302,6 +315,8 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
                                                 onChanged:
                                                     _handleWeekDateChanged,
                                                 events: widget.events,
+                                                keepLineSize:
+                                                    widget.keepLineSize,
                                               );
                                             },
                                           ),

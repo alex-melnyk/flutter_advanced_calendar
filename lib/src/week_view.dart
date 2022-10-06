@@ -10,6 +10,7 @@ class WeekView extends StatelessWidget {
     this.onChanged,
     this.events,
     required this.innerDot,
+    required this.keepLineSize,
   }) : super(key: key);
 
   final DateTime todayDate = DateTime.now().toZeroTime();
@@ -20,6 +21,7 @@ class WeekView extends StatelessWidget {
   final ValueChanged<DateTime>? onChanged;
   final List<DateTime>? events;
   final bool innerDot;
+  final bool keepLineSize;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +40,7 @@ class WeekView extends StatelessWidget {
             final isSelected = date.isAtSameMomentAs(selectedDate);
             final isHighlight = highlightMonth == date.month;
 
-            final containsToday =
+            final hasEvent =
                 events!.indexWhere((element) => element.isSameDate(date));
 
             return Column(
@@ -51,10 +53,15 @@ class WeekView extends StatelessWidget {
                   onPressed: onChanged != null ? () => onChanged!(date) : null,
                   isSelected: isSelected,
                   isToday: isToday,
-                  hasEvent: containsToday != -1,
+                  hasEvent: !hasEvent.isNegative,
+                  keepLineSize: keepLineSize,
                   child: Text(
                     '${date.day}',
+                    maxLines: 1,
                     style: TextStyle(
+                      fontSize: keepLineSize
+                          ? (!hasEvent.isNegative ? 13 : 24.0)
+                          : null,
                       color: isSelected || isToday
                           ? theme.colorScheme.onPrimary
                           : isHighlight || highlightMonth == null

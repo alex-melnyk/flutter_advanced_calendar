@@ -1,3 +1,6 @@
+## 1.2.1
+
+* Add new consistent line size view option
 ## 1.2.0
 
 * Update flutter_lints to 2.0.1

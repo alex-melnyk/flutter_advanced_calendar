@@ -15,10 +15,10 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   final _calendarControllerToday = AdvancedCalendarController.today();
   final _calendarControllerCustom =
-      AdvancedCalendarController.custom(DateTime(2021, 2, 16));
+      AdvancedCalendarController.custom(DateTime(2022, 10, 23));
   final List<DateTime> events = [
-    DateTime.utc(2021, 08, 10, 12),
-    DateTime.utc(2021, 08, 11, 12)
+    DateTime.now(),
+    DateTime(2022, 10, 10),
   ];
   @override
   Widget build(BuildContext context) {
@@ -65,6 +65,8 @@ class _MyAppState extends State<MyApp> {
                 events: events,
                 weekLineHeight: 48.0,
                 startWeekDay: 1,
+                innerDot: true,
+                keepLineSize: true,
               ),
             ),
           ],
