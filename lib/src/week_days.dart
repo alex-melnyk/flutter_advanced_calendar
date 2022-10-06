@@ -6,6 +6,7 @@ class WeekDays extends StatelessWidget {
     Key? key,
     this.weekNames = const <String>['S', 'M', 'T', 'W', 'T', 'F', 'S'],
     this.style,
+    required this.keepLineSize,
   })  : assert(weekNames.length == 7, '`weekNames` must have length 7'),
         super(key: key);
 
@@ -14,6 +15,8 @@ class WeekDays extends StatelessWidget {
 
   /// Text style.
   final TextStyle? style;
+
+  final bool keepLineSize;
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +27,7 @@ class WeekDays extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: List.generate(weekNames.length, (index) {
           return DateBox(
+            keepLineSize: keepLineSize,
             child: Text(weekNames[index]),
           );
         }),

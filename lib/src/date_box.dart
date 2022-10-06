@@ -14,6 +14,7 @@ class DateBox extends StatelessWidget {
     this.isSelected = false,
     this.isToday = false,
     this.hasEvent = false,
+    required this.keepLineSize,
   }) : super(key: key);
 
   /// Child widget.
@@ -46,6 +47,9 @@ class DateBox extends StatelessWidget {
   /// Show event in DateBox.
   final bool hasEvent;
 
+  /// Keeps consistent line size for dates
+  final bool keepLineSize;
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -69,28 +73,20 @@ class DateBox extends StatelessWidget {
                     : null,
             borderRadius: borderRadius,
           ),
-          child: Stack(
-            fit: StackFit.expand,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Align(
-                alignment: Alignment.center,
-                child: child,
-              ),
+              child,
               if (showDot && hasEvent)
-                Positioned.fill(
-                  child: Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Container(
-                      margin: const EdgeInsets.all(2.0),
-                      height: 4,
-                      width: 4,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: isSelected
-                            ? theme.colorScheme.onPrimary
-                            : theme.colorScheme.secondary,
-                      ),
-                    ),
+                Container(
+                  margin: keepLineSize ? null : const EdgeInsets.all(2.0),
+                  height: 4,
+                  width: 4,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: isSelected
+                        ? theme.colorScheme.onPrimary
+                        : theme.colorScheme.secondary,
                   ),
                 ),
             ],
