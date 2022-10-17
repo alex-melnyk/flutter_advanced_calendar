@@ -24,7 +24,7 @@ class AdvancedCalendar extends StatefulWidget {
     this.preloadWeekViewAmount = 21,
     this.weeksInMonthViewAmount = 6,
     this.todayStyle,
-    this.dateStyle,
+    this.headerStyle,
     this.onHorizontalDrag,
     this.innerDot = false,
     this.keepLineSize = false,
@@ -61,7 +61,7 @@ class AdvancedCalendar extends StatefulWidget {
   final int? startWeekDay;
 
   /// Style of headers date
-  final TextStyle? dateStyle;
+  final TextStyle? headerStyle;
 
   /// Style of Today button
   final TextStyle? todayStyle;
@@ -190,7 +190,7 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
                       monthDate:
                           _monthRangeList[_monthViewCurrentPage.value].firstDay,
                       onPressed: _handleTodayPressed,
-                      dateStyle: widget.dateStyle,
+                      dateStyle: widget.headerStyle,
                       todayStyle: widget.todayStyle,
                     );
                   },
