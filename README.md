@@ -68,4 +68,5 @@ Theme(
 |`events`|List of DateTime to indicate date|*List<DateTime>*|[]|
 |`startWeekDay`|Indicated for the beginning of the first day on Sunday|*int*|0|
 |`innerDot`|Show alternative event design in date box|*bool*|false|
-
+|`headerStyle`|Style for `month year` on top left| TextStyle|null|
+|`calendarTextStyle`|Style for dates in calendar| TextStyle|null|

@@ -12,6 +12,7 @@ class MonthView extends StatelessWidget {
     this.onChanged,
     this.events,
     required this.keepLineSize,
+    this.textStyle,
   }) : super(key: key);
 
   final ViewRange monthView;
@@ -23,6 +24,7 @@ class MonthView extends StatelessWidget {
   final List<DateTime>? events;
   final bool innerDot;
   final bool keepLineSize;
+  final TextStyle? textStyle;
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +51,7 @@ class MonthView extends StatelessWidget {
               onChanged: onChanged,
               events: events,
               keepLineSize: keepLineSize,
+              textStyle: textStyle,
             );
           },
           growable: false,

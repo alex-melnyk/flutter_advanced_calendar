@@ -24,10 +24,11 @@ class AdvancedCalendar extends StatefulWidget {
     this.preloadWeekViewAmount = 21,
     this.weeksInMonthViewAmount = 6,
     this.todayStyle,
-    this.dateStyle,
+    this.headerStyle,
     this.onHorizontalDrag,
     this.innerDot = false,
     this.keepLineSize = false,
+    this.calendarTextStyle,
   })  : assert(
           keepLineSize && innerDot ||
               innerDot && !keepLineSize ||
@@ -61,7 +62,7 @@ class AdvancedCalendar extends StatefulWidget {
   final int? startWeekDay;
 
   /// Style of headers date
-  final TextStyle? dateStyle;
+  final TextStyle? headerStyle;
 
   /// Style of Today button
   final TextStyle? todayStyle;
@@ -72,6 +73,9 @@ class AdvancedCalendar extends StatefulWidget {
   /// Keeps consistent line size for dates
   /// Can't be used without innerDot
   final bool keepLineSize;
+
+  /// Text style for dates in calendar
+  final TextStyle? calendarTextStyle;
 
   @override
   _AdvancedCalendarState createState() => _AdvancedCalendarState();
@@ -190,7 +194,7 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
                       monthDate:
                           _monthRangeList[_monthViewCurrentPage.value].firstDay,
                       onPressed: _handleTodayPressed,
-                      dateStyle: widget.dateStyle,
+                      dateStyle: widget.headerStyle,
                       todayStyle: widget.todayStyle,
                     );
                   },
@@ -253,6 +257,7 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
                                         onChanged: _handleDateChanged,
                                         events: widget.events,
                                         keepLineSize: widget.keepLineSize,
+                                        textStyle: widget.calendarTextStyle,
                                       );
                                     },
                                   ),
@@ -317,6 +322,8 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
                                                 events: widget.events,
                                                 keepLineSize:
                                                     widget.keepLineSize,
+                                                textStyle:
+                                                    widget.calendarTextStyle,
                                               );
                                             },
                                           ),

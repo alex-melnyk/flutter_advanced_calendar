@@ -67,6 +67,12 @@ class _MyAppState extends State<MyApp> {
                 startWeekDay: 1,
                 innerDot: true,
                 keepLineSize: true,
+                calendarTextStyle: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w400,
+                  height: 1.3125,
+                  letterSpacing: 0,
+                ),
               ),
             ),
           ],

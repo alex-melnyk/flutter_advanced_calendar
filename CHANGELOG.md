@@ -1,3 +1,8 @@
+## 1.3.0
+
+* Refactor keepLineSize to have consistent calendar's date size
+* Rename dateStyle to headerStyle
+* Add calendarTextStyle
 ## 1.2.1
 
 * Add new consistent line size view option
