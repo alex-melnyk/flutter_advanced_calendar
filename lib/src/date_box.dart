@@ -14,7 +14,6 @@ class DateBox extends StatelessWidget {
     this.isSelected = false,
     this.isToday = false,
     this.hasEvent = false,
-    required this.keepLineSize,
   }) : super(key: key);
 
   /// Child widget.
@@ -47,9 +46,6 @@ class DateBox extends StatelessWidget {
   /// Show event in DateBox.
   final bool hasEvent;
 
-  /// Keeps consistent line size for dates
-  final bool keepLineSize;
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -79,7 +75,7 @@ class DateBox extends StatelessWidget {
               child,
               if (showDot && hasEvent)
                 Container(
-                  margin: keepLineSize ? null : const EdgeInsets.all(2.0),
+                  margin: const EdgeInsets.all(2.0),
                   height: 4,
                   width: 4,
                   decoration: BoxDecoration(

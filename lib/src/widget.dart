@@ -28,6 +28,7 @@ class AdvancedCalendar extends StatefulWidget {
     this.onHorizontalDrag,
     this.innerDot = false,
     this.keepLineSize = false,
+    this.calendarTextStyle,
   })  : assert(
           keepLineSize && innerDot ||
               innerDot && !keepLineSize ||
@@ -72,6 +73,9 @@ class AdvancedCalendar extends StatefulWidget {
   /// Keeps consistent line size for dates
   /// Can't be used without innerDot
   final bool keepLineSize;
+
+  /// Text style for dates in calendar
+  final TextStyle? calendarTextStyle;
 
   @override
   _AdvancedCalendarState createState() => _AdvancedCalendarState();
@@ -253,6 +257,7 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
                                         onChanged: _handleDateChanged,
                                         events: widget.events,
                                         keepLineSize: widget.keepLineSize,
+                                        textStyle: widget.calendarTextStyle,
                                       );
                                     },
                                   ),
@@ -317,6 +322,8 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
                                                 events: widget.events,
                                                 keepLineSize:
                                                     widget.keepLineSize,
+                                                textStyle:
+                                                    widget.calendarTextStyle,
                                               );
                                             },
                                           ),
