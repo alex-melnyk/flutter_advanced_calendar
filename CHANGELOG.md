@@ -1,11 +1,18 @@
+## 1.4.0
+
+* Add material 3 support using titleMedium, bodyLarge, and bodyMedium, instead of subtitle1, bodyText1, and bodyText2.
+* Fix dependencies versions.
+
 ## 1.3.0
 
 * Refactor keepLineSize to have consistent calendar's date size
 * Rename dateStyle to headerStyle
 * Add calendarTextStyle
+ 
 ## 1.2.1
 
 * Add new consistent line size view option
+
 ## 1.2.0
 
 * Update flutter_lints to 2.0.1
