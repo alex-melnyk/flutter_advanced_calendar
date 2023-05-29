@@ -165,8 +165,8 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
     final theme = Theme.of(context);
     return Material(
       color: Colors.transparent,
-      child: DefaultTextStyle(
-        style: theme.textTheme.bodyText2!,
+      child: DefaultTextStyle.merge(
+        style: theme.textTheme.bodyMedium,
         child: GestureDetector(
           onVerticalDragStart: (details) {
             _captureOffset = details.globalPosition;
@@ -200,7 +200,7 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
                   },
                 ),
                 WeekDays(
-                  style: theme.textTheme.bodyText1!.copyWith(
+                  style: theme.textTheme.bodyLarge?.copyWith(
                     color: theme.hintColor,
                   ),
                   keepLineSize: widget.keepLineSize,
@@ -309,7 +309,7 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
                                             },
                                             controller: _weekPageController,
                                             itemCount: _weekRangeList.length,
-                                            physics: closeMonthScroll(),
+                                            physics: _closeMonthScroll(),
                                             itemBuilder: (context, index) {
                                               return WeekView(
                                                 innerDot: widget.innerDot,
@@ -354,6 +354,19 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
     );
   }
 
+  @override
+  void dispose() {
+    _animationController.dispose();
+    _monthPageController!.dispose();
+    _monthViewCurrentPage.dispose();
+
+    if (widget.controller == null) {
+      _controller.dispose();
+    }
+
+    super.dispose();
+  }
+
   void _handleWeekDateChanged(DateTime date) {
     _handleDateChanged(date);
 
@@ -384,7 +397,7 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
     _weekPageController!.jumpToPage(widget.preloadWeekViewAmount ~/ 2);
   }
 
-  ScrollPhysics closeMonthScroll() {
+  ScrollPhysics _closeMonthScroll() {
     if ((_monthViewCurrentPage.value ==
             (widget.preloadMonthViewAmount ~/ 2) + 3 ||
         _monthViewCurrentPage.value ==
@@ -393,18 +406,5 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
     } else {
       return const AlwaysScrollableScrollPhysics();
     }
-  }
-
-  @override
-  void dispose() {
-    _animationController.dispose();
-    _monthPageController!.dispose();
-    _monthViewCurrentPage.dispose();
-
-    if (widget.controller == null) {
-      _controller.dispose();
-    }
-
-    super.dispose();
   }
 }
