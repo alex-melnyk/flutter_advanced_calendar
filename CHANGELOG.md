@@ -1,3 +1,7 @@
+## 1.4.1
+
+* Downgrade intl to ^0.18.0
+
 ## 1.4.0
 
 * Add material 3 support using titleMedium, bodyLarge, and bodyMedium, instead of subtitle1, bodyText1, and bodyText2.
