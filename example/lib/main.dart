@@ -40,6 +40,12 @@ class _MyAppState extends State<MyApp> {
               events: events,
               startWeekDay: 1,
             ),
+            AdvancedCalendar(
+              controller: _calendarControllerToday,
+              events: events,
+              startWeekDay: 1,
+              showNavigationArrows: true,
+            ),
             Theme(
               data: ThemeData.light().copyWith(
                 textTheme: ThemeData.light().textTheme.copyWith(

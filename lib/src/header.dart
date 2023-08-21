@@ -1,7 +1,7 @@
 part of 'widget.dart';
 
 class Header extends StatelessWidget {
-  const Header({
+  Header({
     Key? key,
     required this.monthDate,
     this.margin = const EdgeInsets.only(
@@ -10,17 +10,37 @@ class Header extends StatelessWidget {
       top: 4.0,
       bottom: 4.0,
     ),
-    this.onPressed,
     this.dateStyle,
     this.todayStyle,
-  }) : super(key: key);
+    this.child,
+    this.onPressed,
+    this.localeID = 'en_US',
+  })  : _dateFormatter = DateFormat.yMMMM(localeID),
+        super(key: key);
 
-  static final _dateFormatter = DateFormat().add_yMMMM();
+  /// The date formatter to use for the header.
+  late final DateFormat _dateFormatter;
+
+  /// The locale to use for the header.
+  final String localeID;
+
+  /// The date to display in the header.
   final DateTime monthDate;
+
+  /// The margin to use for the header.
   final EdgeInsetsGeometry margin;
-  final VoidCallback? onPressed;
+
+  /// The style to use for the date.
   final TextStyle? dateStyle;
+
+  /// The style to use for the today button.
   final TextStyle? todayStyle;
+
+  /// The child to display in the header.
+  final Widget? child;
+
+  /// The callback that is called when the today button is pressed.
+  final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -29,12 +49,13 @@ class Header extends StatelessWidget {
     return Container(
       margin: margin,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
             _dateFormatter.format(monthDate),
             style: dateStyle ?? theme.textTheme.subtitle1!,
           ),
+          if (child != null) child!,
+          const Spacer(),
           InkWell(
             onTap: onPressed,
             borderRadius: const BorderRadius.all(

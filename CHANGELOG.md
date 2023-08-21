@@ -1,11 +1,16 @@
+## 1.3.1
+* showNavigationArrows property added to show/hide navigation arrows.
+
 ## 1.3.0
 
 * Refactor keepLineSize to have consistent calendar's date size
 * Rename dateStyle to headerStyle
 * Add calendarTextStyle
+ 
 ## 1.2.1
 
 * Add new consistent line size view option
+ 
 ## 1.2.0
 
 * Update flutter_lints to 2.0.1
