@@ -52,7 +52,7 @@ class Header extends StatelessWidget {
         children: [
           Text(
             _dateFormatter.format(monthDate),
-            style: dateStyle ?? theme.textTheme.subtitle1!,
+            style: dateStyle ?? theme.textTheme.titleMedium!,
           ),
           if (child != null) child!,
           const Spacer(),
@@ -68,7 +68,7 @@ class Header extends StatelessWidget {
               ),
               child: Text(
                 'Today',
-                style: todayStyle ?? theme.textTheme.subtitle1!,
+                style: todayStyle ?? theme.textTheme.titleMedium!,
               ),
             ),
           ),

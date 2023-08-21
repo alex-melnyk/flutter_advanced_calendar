@@ -176,7 +176,7 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
     return Material(
       color: Colors.transparent,
       child: DefaultTextStyle(
-        style: theme.textTheme.bodyText2!,
+        style: theme.textTheme.bodyMedium!,
         child: GestureDetector(
           onVerticalDragStart: (details) {
             _captureOffset = details.globalPosition;
@@ -234,7 +234,7 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
                   },
                 ),
                 WeekDays(
-                  style: theme.textTheme.bodyText1!.copyWith(
+                  style: theme.textTheme.bodyLarge!.copyWith(
                     color: theme.hintColor,
                   ),
                   weekNames: _weekNames ??
@@ -394,7 +394,6 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
   }
 
   void _handleMonthPageChanged(int pageIndex) {
-    print('pageIndex: $pageIndex');
     if (widget.onHorizontalDrag != null) {
       widget.onHorizontalDrag!(
         _monthRangeList[pageIndex].firstDay,

@@ -8,6 +8,7 @@ analyzer:
 
 linter:
   rules:
+    library_private_types_in_public_api: false
     unawaited_futures: false
     always_put_control_body_on_new_line: true
     avoid_bool_literals_in_conditional_expressions: true

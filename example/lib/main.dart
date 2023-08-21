@@ -9,10 +9,10 @@ class MyApp extends StatefulWidget {
   const MyApp({Key key}) : super(key: key);
 
   @override
-  _MyAppState createState() => _MyAppState();
+  MyAppState createState() => MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class MyAppState extends State<MyApp> {
   final _calendarControllerToday = AdvancedCalendarController.today();
   final _calendarControllerCustom =
       AdvancedCalendarController.custom(DateTime(2022, 10, 23));
@@ -20,6 +20,7 @@ class _MyAppState extends State<MyApp> {
     DateTime.now(),
     DateTime(2022, 10, 10),
   ];
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -49,18 +50,20 @@ class _MyAppState extends State<MyApp> {
             Theme(
               data: ThemeData.light().copyWith(
                 textTheme: ThemeData.light().textTheme.copyWith(
-                      subtitle1: ThemeData.light().textTheme.subtitle1.copyWith(
-                            fontSize: 16,
-                            color: theme.colorScheme.secondary,
-                          ),
-                      bodyText1: ThemeData.light().textTheme.bodyText1.copyWith(
+                      titleMedium:
+                          ThemeData.light().textTheme.titleMedium.copyWith(
+                                fontSize: 16,
+                                color: theme.colorScheme.secondary,
+                              ),
+                      bodyLarge: ThemeData.light().textTheme.bodyLarge.copyWith(
                             fontSize: 14,
                             color: Colors.black54,
                           ),
-                      bodyText2: ThemeData.light().textTheme.bodyText1.copyWith(
-                            fontSize: 12,
-                            color: Colors.black87,
-                          ),
+                      bodyMedium:
+                          ThemeData.light().textTheme.bodyLarge.copyWith(
+                                fontSize: 12,
+                                color: Colors.black87,
+                              ),
                     ),
                 primaryColor: Colors.red,
                 highlightColor: Colors.yellow,
