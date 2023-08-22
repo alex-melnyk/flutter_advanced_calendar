@@ -178,18 +178,10 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
       child: DefaultTextStyle(
         style: theme.textTheme.bodyMedium!,
         child: GestureDetector(
-          onVerticalDragStart: (details) {
-            _captureOffset = details.globalPosition;
-          },
-          onVerticalDragUpdate: (details) {
-            final moveOffset = details.globalPosition;
-            final diffY = moveOffset.dy - _captureOffset!.dy;
-
-            _animationController.value =
-                _animationValue + diffY / (widget.weekLineHeight * 5);
-          },
-          onVerticalDragEnd: (details) => _handleFinishDrag(),
-          onVerticalDragCancel: _handleFinishDrag,
+          onVerticalDragStart: _handleDragStart,
+          onVerticalDragUpdate: _handleDragUpdate,
+          onVerticalDragEnd: (details) => _handleDragEnd(),
+          onVerticalDragCancel: _handleDragEnd,
           child: Container(
             color: Colors.transparent,
             child: Column(
@@ -210,17 +202,13 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
                           ? Row(
                               children: [
                                 IconButton(
-                                  style: IconButton.styleFrom(),
                                   iconSize: 16,
                                   padding: EdgeInsets.zero,
                                   visualDensity: VisualDensity.compact,
                                   icon: const Icon(Icons.arrow_back_ios),
-                                  onPressed: _monthPageController?.page == 0.0
-                                      ? null
-                                      : _handlePrevPressed,
+                                  onPressed: _handlePrevPressed,
                                 ),
                                 IconButton(
-                                  style: IconButton.styleFrom(),
                                   iconSize: 16,
                                   padding: EdgeInsets.zero,
                                   visualDensity: VisualDensity.compact,
@@ -256,6 +244,7 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
                           return Stack(
                             alignment: Alignment.center,
                             children: [
+                              /// Month view
                               IgnorePointer(
                                 ignoring: _animationController.value == 0.0,
                                 child: Opacity(
@@ -288,6 +277,8 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
                                   ),
                                 ),
                               ),
+
+                              /// Week view
                               ValueListenableBuilder<int>(
                                 valueListenable: _monthViewCurrentPage,
                                 builder: (_, pageIndex, __) {
@@ -426,7 +417,19 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
     _controller.value = date;
   }
 
-  void _handleFinishDrag() async {
+  void _handleDragStart(DragStartDetails details) {
+    _captureOffset = details.globalPosition;
+  }
+
+  void _handleDragUpdate(DragUpdateDetails details) {
+    final moveOffset = details.globalPosition;
+    final diffY = moveOffset.dy - _captureOffset!.dy;
+
+    _animationController.value =
+        _animationValue + diffY / (widget.weekLineHeight * 5);
+  }
+
+  void _handleDragEnd() async {
     _captureOffset = null;
 
     if (_animationController.value > 0.5) {

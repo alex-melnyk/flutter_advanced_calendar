@@ -1,3 +1,6 @@
+## 1.3.2
+* fix accessing to the page view controller before it's initialized.
+
 ## 1.3.1
 * showNavigationArrows property added to show/hide navigation arrows.
 
