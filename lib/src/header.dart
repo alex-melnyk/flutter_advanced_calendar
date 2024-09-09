@@ -13,6 +13,7 @@ class Header extends StatelessWidget {
     this.onPressed,
     this.dateStyle,
     this.todayStyle,
+    this.child,
   }) : super(key: key);
 
   static final _dateFormatter = DateFormat().add_yMMMM();
@@ -22,6 +23,8 @@ class Header extends StatelessWidget {
   final TextStyle? dateStyle;
   final TextStyle? todayStyle;
 
+  /// The child to display in the header (for navigation arrows).
+  final Widget? child;
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -35,6 +38,8 @@ class Header extends StatelessWidget {
             _dateFormatter.format(monthDate),
             style: dateStyle ?? theme.textTheme.titleMedium,
           ),
+          if (child != null) child!,
+          const Spacer(),
           InkWell(
             onTap: onPressed,
             borderRadius: const BorderRadius.all(

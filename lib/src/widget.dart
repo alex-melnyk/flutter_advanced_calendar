@@ -29,6 +29,7 @@ class AdvancedCalendar extends StatefulWidget {
     this.innerDot = false,
     this.keepLineSize = false,
     this.calendarTextStyle,
+    this.showNavigationArrows = false,
   })  : assert(
           keepLineSize && innerDot ||
               innerDot && !keepLineSize ||
@@ -76,6 +77,9 @@ class AdvancedCalendar extends StatefulWidget {
 
   /// Text style for dates in calendar
   final TextStyle? calendarTextStyle;
+
+  /// Show navigation arrows.
+  final bool showNavigationArrows;
 
   @override
   _AdvancedCalendarState createState() => _AdvancedCalendarState();
@@ -196,6 +200,26 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
                       onPressed: _handleTodayPressed,
                       dateStyle: widget.headerStyle,
                       todayStyle: widget.todayStyle,
+                      child: widget.showNavigationArrows
+                          ? Row(
+                              children: [
+                                IconButton(
+                                  iconSize: 16,
+                                  padding: EdgeInsets.zero,
+                                  visualDensity: VisualDensity.compact,
+                                  icon: const Icon(Icons.arrow_back_ios),
+                                  onPressed: _handlePrevPressed,
+                                ),
+                                IconButton(
+                                  iconSize: 16,
+                                  padding: EdgeInsets.zero,
+                                  visualDensity: VisualDensity.compact,
+                                  icon: const Icon(Icons.arrow_forward_ios),
+                                  onPressed: _handleNextPressed,
+                                ),
+                              ],
+                            )
+                          : null,
                     );
                   },
                 ),
@@ -395,6 +419,38 @@ class _AdvancedCalendarState extends State<AdvancedCalendar>
 
     _monthPageController!.jumpToPage(widget.preloadMonthViewAmount ~/ 2);
     _weekPageController!.jumpToPage(widget.preloadWeekViewAmount ~/ 2);
+  }
+
+  void _handlePrevPressed() {
+    final isMonthView = _animationController.value >= 0.5;
+
+    if (isMonthView) {
+      _monthPageController?.previousPage(
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    } else {
+      _weekPageController?.previousPage(
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    }
+  }
+
+  void _handleNextPressed() {
+    final isMonthView = _animationController.value >= 0.5;
+
+    if (isMonthView) {
+      _monthPageController!.nextPage(
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    } else {
+      _weekPageController!.nextPage(
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    }
   }
 
   ScrollPhysics _closeMonthScroll() {

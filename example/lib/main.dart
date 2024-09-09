@@ -40,6 +40,7 @@ class _MyAppState extends State<MyApp> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               AdvancedCalendar(
+                showNavigationArrows: true,
                 controller: _calendarControllerToday,
                 events: events,
                 startWeekDay: 1,
