@@ -1,3 +1,7 @@
+## 1.4.2
+
+* Arrow keys navigation added.
+
 ## 1.4.1
 
 * Downgrade intl to ^0.18.0
