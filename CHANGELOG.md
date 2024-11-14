@@ -1,3 +1,7 @@
+## 1.4.3
+
+* Dependency updated.
+
 ## 1.4.2
 
 * Arrow keys navigation added.
