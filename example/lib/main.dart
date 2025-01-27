@@ -23,8 +23,6 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return MaterialApp(
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
@@ -32,57 +30,59 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: const Text('Advanced Calendar Example'),
         ),
-        body: Builder(builder: (context) {
-          final theme = Theme.of(context);
+        body: Builder(
+          builder: (context) {
+            final theme = Theme.of(context);
 
-          return Column(
-            mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              AdvancedCalendar(
-                showNavigationArrows: true,
-                controller: _calendarControllerToday,
-                events: events,
-                startWeekDay: 1,
-              ),
-              Theme(
-                data: theme.copyWith(
-                  textTheme: theme.textTheme.copyWith(
-                    titleMedium: theme.textTheme.titleMedium!.copyWith(
-                      fontSize: 16,
-                      color: theme.colorScheme.secondary,
-                    ),
-                    bodyLarge: theme.textTheme.bodyLarge!.copyWith(
-                      fontSize: 14,
-                      color: Colors.black54,
-                    ),
-                    bodyMedium: theme.textTheme.bodyMedium!.copyWith(
-                      fontSize: 12,
-                      color: Colors.black87,
-                    ),
-                  ),
-                  primaryColor: Colors.red,
-                  highlightColor: Colors.yellow,
-                  disabledColor: Colors.green,
-                ),
-                child: AdvancedCalendar(
-                  controller: _calendarControllerCustom,
+            return Column(
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                AdvancedCalendar(
+                  showNavigationArrows: true,
+                  controller: _calendarControllerToday,
                   events: events,
-                  weekLineHeight: 48.0,
                   startWeekDay: 1,
-                  innerDot: true,
-                  keepLineSize: true,
-                  calendarTextStyle: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w400,
-                    height: 1.3125,
-                    letterSpacing: 0,
+                ),
+                Theme(
+                  data: theme.copyWith(
+                    textTheme: theme.textTheme.copyWith(
+                      titleMedium: theme.textTheme.titleMedium!.copyWith(
+                        fontSize: 16,
+                        color: theme.colorScheme.secondary,
+                      ),
+                      bodyLarge: theme.textTheme.bodyLarge!.copyWith(
+                        fontSize: 14,
+                        color: Colors.black54,
+                      ),
+                      bodyMedium: theme.textTheme.bodyMedium!.copyWith(
+                        fontSize: 12,
+                        color: Colors.black87,
+                      ),
+                    ),
+                    primaryColor: Colors.red,
+                    highlightColor: Colors.yellow,
+                    disabledColor: Colors.green,
+                  ),
+                  child: AdvancedCalendar(
+                    controller: _calendarControllerCustom,
+                    events: events,
+                    weekLineHeight: 48.0,
+                    startWeekDay: 1,
+                    innerDot: true,
+                    keepLineSize: true,
+                    calendarTextStyle: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w400,
+                      height: 1.3125,
+                      letterSpacing: 0,
+                    ),
                   ),
                 ),
-              ),
-            ],
-          );
-        }),
+              ],
+            );
+          },
+        ),
       ),
     );
   }

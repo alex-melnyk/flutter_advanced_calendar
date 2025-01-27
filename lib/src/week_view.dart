@@ -87,7 +87,7 @@ class WeekView extends StatelessWidget {
                                 ? theme.colorScheme.onPrimary
                                 : theme.colorScheme.secondary,
                           ),
-                        )
+                        ),
                     ],
                   ),
                 ),
@@ -125,7 +125,7 @@ class WeekView extends StatelessWidget {
                       borderRadius: BorderRadius.circular(50),
                       color: theme.primaryColor,
                     ),
-                  )
+                  ),
               ],
             );
           },
