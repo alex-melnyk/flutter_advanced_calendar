@@ -1,3 +1,8 @@
+## 1.4.4
+
+* Add Flutter 3.41.6 basic support with `FontWeight.values.indexOf` fix for week view.
+* Add web support on testing example project.
+
 ## 1.4.3
 
 * Dependency updated.

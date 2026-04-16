@@ -73,7 +73,7 @@ class WeekView extends StatelessWidget {
                           fontWeight:
                               isSelected && textStyle?.fontWeight != null
                                   ? FontWeight
-                                      .values[textStyle!.fontWeight!.index + 2]
+                                      .values[FontWeight.values.indexOf(textStyle!.fontWeight!) + 2]
                                   : textStyle?.fontWeight,
                         ),
                       ),
